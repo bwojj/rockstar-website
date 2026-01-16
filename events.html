@@ -20,7 +20,7 @@
         html { scroll-behavior: smooth; }
         body { background-color: var(--bg-black); color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
 
-        /* --- HEADER --- */
+        /* --- 1. HEADER --- */
         header {
             background: rgba(0, 0, 0, 0.95);
             height: 120px;
@@ -56,7 +56,7 @@
         #mobileMenu.active { display: flex; }
         #mobileMenu a { color: white; text-decoration: none; margin: 15px 0; font-family: 'Oswald'; font-size: 24px; display: block; }
 
-        /* --- HERO --- */
+        /* --- 2. HERO --- */
         .events-hero {
             position: relative; height: 400px;
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/images/header.jpg') center/cover no-repeat;
@@ -67,7 +67,7 @@
         .breadcrumb a { color: #fff; text-decoration: none; }
         .breadcrumb span { color: var(--primary-pink); margin: 0 10px; }
 
-        /* --- EVENTS SECTION --- */
+        /* --- 3. EVENTS SECTION --- */
         .events-section { padding: 80px 5%; background-color: var(--bg-black); min-height: 600px; }
         .section-title { text-align: center; font-family: 'Oswald'; font-size: 42px; color: #fff; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 60px; }
         
@@ -124,10 +124,6 @@
             font-weight: 400;
         }
 
-        .event-actions {
-            text-align: right;
-        }
-
         .ticket-btn {
             display: inline-block;
             background: var(--primary-pink);
@@ -149,7 +145,7 @@
 
         .no-shows { text-align: center; padding: 100px 0; border: 1px dashed #333; color: #444; font-family: 'Oswald'; font-size: 24px; text-transform: uppercase; }
 
-        /* --- FOOTER --- */
+        /* --- 4. FOOTER --- */
         footer { background: #000; padding: 120px 0 60px; text-align: center; border-top: 1px solid #111; }
         .social-links { margin-bottom: 30px; }
         .social-links a { color: white; margin: 0 15px; font-size: 22px; transition: 0.3s; }
@@ -161,10 +157,26 @@
             .hamburger { display: block; order: 1; }
             .center-logo-box { order: 2; margin: 0; }
             .nav-group { display: none; }
-            .event-box { flex-direction: column; text-align: center; gap: 25px; padding: 30px; }
+            
+            .event-box { 
+                flex-direction: column; 
+                text-align: center; 
+                gap: 25px; 
+                padding: 30px; 
+            }
             .event-date-venue h3 { font-size: 28px; }
-            .event-actions { width: 100%; }
-            .ticket-btn { width: 100%; }
+            
+            .event-actions { 
+                width: 100%; 
+                display: flex;
+                justify-content: center; /* Center the button container */
+            }
+            .ticket-btn { 
+                width: auto; 
+                min-width: 200px; /* Give it a consistent base size */
+                max-width: 250px; /* Constrain width as requested */
+                padding: 12px 20px;
+            }
             .events-hero h1 { font-size: 45px; }
         }
     </style>
@@ -188,7 +200,7 @@
         <nav id="mobileMenu">
             <a href="index.html" onclick="toggleMenu()">HOME</a>
             <a href="index.html#about" onclick="toggleMenu()">ABOUT</a>
-            <a href="#" class="active" onclick="toggleMenu()">SHOWS</a>
+            <a href="#" class="active">SHOWS</a>
             <a href="index.html#gallery" onclick="toggleMenu()">GALLERY</a>
             <a href="mailto:booking@rockstar-band.com" class="btn-book-nav">BOOK US!!!</a>
         </nav>
@@ -242,13 +254,11 @@
                 let html = '';
                 for (let i = 1; i < rows.length; i++) {
                     const row = rows[i].c;
-                    
                     const dateRaw = row[0] ? (row[0].f || row[0].v) : 'TBA';
                     const venue = row[1] ? row[1].v : 'Venue TBA';
                     const location = row[2] ? row[2].v : '';
                     const link = row[3] ? row[3].v : '#';
 
-                    // Safe Link Check
                     let finalLink = '#';
                     if (link && typeof link === 'string' && link !== '#') {
                         finalLink = link.startsWith('http') ? link : 'https://' + link;

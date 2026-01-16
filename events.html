@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - RockStar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --bg-black: #000000;
+            --text-glow: 0 0 10px rgba(255, 77, 109, 0.8), 0 0 20px rgba(255, 77, 109, 0.4);
+            --card-bg: #0a0a0a;
+        }
+
+        /* Base Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-black); color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            height: 120px;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-group { display: flex; align-items: center; flex: 1; }
+        .nav-group.right { justify-content: flex-end; }
+        .nav-group a {
+            color: white; text-decoration: none; margin: 0 20px;
+            font-family: 'Oswald'; font-size: 18px; letter-spacing: 1.5px;
+            text-shadow: var(--text-glow); transition: 0.3s ease; text-transform: uppercase;
+        }
+        .nav-group a:hover { color: var(--primary-pink); text-shadow: 0 0 15px rgba(255, 77, 109, 1); }
+        .center-logo-box { background: white; padding: 10px; border-radius: 4px; display: flex; align-items: center; margin: 0 30px; }
+        .center-logo { width: 90px; height: auto; }
+        .btn-book-nav {
+            background: var(--primary-pink); color: white !important; padding: 12px 25px;
+            text-decoration: none; font-family: 'Oswald'; font-weight: bold; border-radius: 2px;
+        }
+
+        .hamburger { display: none; font-size: 30px; cursor: pointer; color: white; }
+        #mobileMenu {
+            display: none; position: fixed; top: 120px; left: 0; width: 100%;
+            background: rgba(0,0,0,0.98); flex-direction: column; padding: 40px 0;
+            border-bottom: 2px solid var(--primary-pink); z-index: 999; text-align: center;
+        }
+        #mobileMenu.active { display: flex; }
+        #mobileMenu a { color: white; text-decoration: none; margin: 15px 0; font-family: 'Oswald'; font-size: 24px; display: block; }
+
+        /* --- HERO --- */
+        .events-hero {
+            position: relative; height: 400px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/images/header.jpg') center/cover no-repeat;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+        }
+        .events-hero h1 { font-family: 'Montserrat'; font-size: 60px; text-transform: capitalize; margin-bottom: 10px; letter-spacing: 2px; text-shadow: var(--text-glow); }
+        .breadcrumb { font-family: 'Roboto'; font-size: 16px; color: #ccc; }
+        .breadcrumb a { color: #fff; text-decoration: none; }
+        .breadcrumb span { color: var(--primary-pink); margin: 0 10px; }
+
+        /* --- EVENTS SECTION --- */
+        .events-section { padding: 80px 5%; background-color: var(--bg-black); min-height: 600px; }
+        .section-title { text-align: center; font-family: 'Oswald'; font-size: 42px; color: #fff; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 60px; }
+        
+        #events-container { 
+            max-width: 1000px; 
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .event-box {
+            background: var(--card-bg);
+            border: 1px solid #1a1a1a;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-box:hover {
+            border-color: var(--primary-pink);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.1);
+        }
+
+        .event-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary-pink);
+            box-shadow: var(--text-glow);
+        }
+
+        .event-date-venue h3 {
+            font-family: 'Oswald';
+            font-size: 34px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .event-date-venue p {
+            font-family: 'Roboto';
+            font-size: 18px;
+            color: var(--primary-pink);
+            font-weight: 400;
+        }
+
+        .event-actions {
+            text-align: right;
+        }
+
+        .ticket-btn {
+            display: inline-block;
+            background: var(--primary-pink);
+            color: white;
+            padding: 15px 35px;
+            font-family: 'Oswald';
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .ticket-btn:hover {
+            background: #e63958;
+            box-shadow: var(--text-glow);
+            transform: scale(1.05);
+        }
+
+        .no-shows { text-align: center; padding: 100px 0; border: 1px dashed #333; color: #444; font-family: 'Oswald'; font-size: 24px; text-transform: uppercase; }
+
+        /* --- FOOTER --- */
+        footer { background: #000; padding: 120px 0 60px; text-align: center; border-top: 1px solid #111; }
+        .social-links { margin-bottom: 30px; }
+        .social-links a { color: white; margin: 0 15px; font-size: 22px; transition: 0.3s; }
+        .social-links a:hover { color: var(--primary-pink); text-shadow: var(--text-glow); }
+        .copyright { margin-top: 50px; font-size: 12px; color: #444; letter-spacing: 2px; }
+
+        @media (max-width: 768px) {
+            header { height: 100px; }
+            .hamburger { display: block; order: 1; }
+            .center-logo-box { order: 2; margin: 0; }
+            .nav-group { display: none; }
+            .event-box { flex-direction: column; text-align: center; gap: 25px; padding: 30px; }
+            .event-date-venue h3 { font-size: 28px; }
+            .event-actions { width: 100%; }
+            .ticket-btn { width: 100%; }
+            .events-hero h1 { font-size: 45px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="hamburger" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+        <nav class="nav-group">
+            <a href="index.html">HOME</a>
+            <a href="index.html#about">ABOUT</a>
+        </nav>
+        <div class="center-logo-box">
+            <img src="https://via.placeholder.com/150x80/000/fff?text=ROCKSTAR" alt="Rockstar Logo" class="center-logo">
+        </div>
+        <nav class="nav-group right">
+            <a href="#" class="active">SHOWS</a>
+            <a href="index.html#gallery">GALLERY</a>
+            <a href="mailto:booking@rockstar-band.com" class="btn-book-nav">BOOK US!!!</a>
+        </nav>
+        <nav id="mobileMenu">
+            <a href="index.html" onclick="toggleMenu()">HOME</a>
+            <a href="index.html#about" onclick="toggleMenu()">ABOUT</a>
+            <a href="#" class="active" onclick="toggleMenu()">SHOWS</a>
+            <a href="index.html#gallery" onclick="toggleMenu()">GALLERY</a>
+            <a href="mailto:booking@rockstar-band.com" class="btn-book-nav">BOOK US!!!</a>
+        </nav>
+    </header>
+
+    <section class="events-hero">
+        <h1>Upcoming Shows</h1>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> <span><i class="fa-solid fa-chevron-right" style="font-size: 12px;"></i></span> Shows
+        </div>
+    </section>
+
+    <section class="events-section">
+        <h2 class="section-title">RockStar Live!</h2>
+        <div id="events-container">
+            <div class="no-shows">Searching for the next arena...</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+        <div class="copyright">© 2026 ROCKSTAR BAND. ALL RIGHTS RESERVED.</div>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById("mobileMenu").classList.toggle("active"); }
+
+        const SHEET_ID = '1TyhhvUyz2HDJ2w8JuAHrHUjXN1FeP9ihltL7weCzh7Y';
+        const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+        async function loadEvents() {
+            try {
+                const response = await fetch(FULL_URL);
+                if (!response.ok) throw new Error("Fetch failed.");
+                
+                const text = await response.text();
+                const jsonData = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+                const rows = jsonData.table.rows;
+                const container = document.getElementById('events-container');
+
+                if (!rows || rows.length <= 1) {
+                    container.innerHTML = '<div class="no-shows">No Upcoming Events Scheduled</div>';
+                    return;
+                }
+
+                let html = '';
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i].c;
+                    
+                    const dateRaw = row[0] ? (row[0].f || row[0].v) : 'TBA';
+                    const venue = row[1] ? row[1].v : 'Venue TBA';
+                    const location = row[2] ? row[2].v : '';
+                    const link = row[3] ? row[3].v : '#';
+
+                    // Safe Link Check
+                    let finalLink = '#';
+                    if (link && typeof link === 'string' && link !== '#') {
+                        finalLink = link.startsWith('http') ? link : 'https://' + link;
+                    }
+
+                    html += `
+                        <div class="event-box">
+                            <div class="event-date-venue">
+                                <h3>${venue.toUpperCase()}</h3>
+                                <p>${dateRaw} — ${location}</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="${finalLink}" target="_blank" class="ticket-btn">Get Tickets</a>
+                            </div>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            } catch (error) {
+                console.error("DETAILED ERROR:", error);
+                document.getElementById('events-container').innerHTML = 
+                    `<div class="no-shows">ERROR LOADING SHOWS. PLEASE ENSURE YOUR GOOGLE SHEET IS SHARED AS "ANYONE WITH THE LINK".</div>`;
+            }
+        }
+        loadEvents();
+    </script>
+</body>
+</html>

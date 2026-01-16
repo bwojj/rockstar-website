@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RockStar - The Ultimate Arena Rock Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --bg-black: #000000;
+            --text-glow: 0 0 10px rgba(255, 77, 109, 0.8), 0 0 20px rgba(255, 77, 109, 0.4);
+        }
+
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- 1. HEADER (Corrected Link Placement) --- */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            height: 120px;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-group {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .nav-group.right {
+            justify-content: flex-end;
+        }
+
+        .nav-group a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-family: 'Oswald';
+            font-size: 18px;
+            letter-spacing: 1.5px;
+            text-shadow: var(--text-glow);
+            transition: 0.3s ease;
+        }
+
+        .nav-group a:hover {
+            color: var(--primary-pink);
+            text-shadow: 0 0 15px rgba(255, 77, 109, 1);
+        }
+
+        .center-logo-box {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            margin: 0 30px;
+        }
+
+        .center-logo { width: 90px; height: auto; }
+
+        .btn-book-nav {
+            background: var(--primary-pink);
+            color: white !important;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-family: 'Oswald';
+            font-weight: bold;
+            border-radius: 2px;
+            margin-left: 20px !important;
+            text-shadow: none !important;
+        }
+
+        /* Hamburger Toggle (Mobile Only) */
+        .hamburger {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Mobile Slide-out Menu Overlay */
+        #mobileMenu {
+            display: none;
+            position: fixed;
+            top: 100px;
+            left: 0;
+            width: 100%;
+            height: auto;
+            background: rgba(0,0,0,0.98);
+            flex-direction: column;
+            padding: 40px 0;
+            border-bottom: 2px solid var(--primary-pink);
+            z-index: 999;
+            text-align: center;
+        }
+        #mobileMenu a {
+            color: white;
+            text-decoration: none;
+            margin: 15px 0;
+            font-family: 'Oswald';
+            font-size: 24px;
+            display: block;
+        }
+
+        /* --- 2. HERO & COUNTDOWN --- */
+        .hero {
+            position: relative;
+            height: 90vh;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
+                        url('assets/images/header.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .countdown-wrapper {
+            position: absolute;
+            bottom: 60px;
+            width: 82%; 
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.04); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            padding: 70px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .countdown-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 34px;
+            font-weight: 400; 
+            color: white;
+            flex-grow: 1;
+            text-shadow: var(--text-glow);
+        }
+
+        .countdown-timer {
+            display: flex;
+            gap: 55px; 
+        }
+
+        .timer-group { text-align: center; }
+
+        .timer-label {
+            font-size: 12px;
+            text-transform: capitalize;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 8px;
+            display: block;
+            opacity: 0.8;
+        }
+
+        .timer-number {
+            font-size: 54px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            line-height: 1;
+            color: white;
+        }
+
+        /* --- 3. ABOUT SECTION --- */
+        .about-section {
+            min-height: 100vh;
+            padding: 160px 10%;
+            background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.9) 80%),
+                        url('assets/images/w44.jpg') center/cover;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .about-content { max-width: 800px; }
+
+        .about-content h2 {
+            font-family: 'Montserrat';
+            font-size: 50px;
+            margin-bottom: 40px;
+            text-shadow: var(--text-glow);
+        }
+
+        .about-content p {
+            font-size: 17px;
+            color: #ddd;
+            line-height: 2;
+            margin-bottom: 30px;
+        }
+
+        /* --- 4. GALLERY --- */
+        .section-header {
+            text-align: center;
+            font-family: 'Oswald';
+            font-size: 36px;
+            padding: 100px 0 50px;
+            letter-spacing: 2px;
+            text-shadow: var(--text-glow);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0 5% 50px;
+        }
+
+        .gallery-img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            background: #111;
+            border: 1px solid #222;
+            transition: 0.4s;
+            cursor: pointer;
+        }
+
+        /* --- MOBILE RESPONSIVE OVERRIDES --- */
+        @media (max-width: 1024px) {
+            header { height: 100px; }
+            .hamburger { display: block; order: 1; }
+            .center-logo-box { order: 2; margin: 0; }
+            
+            /* Hide desktop nav groups */
+            .nav-group { display: none; }
+            
+            /* Show overlay menu when active */
+            #mobileMenu.active { display: flex; }
+
+            .countdown-wrapper {
+                flex-direction: column;
+                padding: 40px 20px;
+                bottom: 20px;
+                text-align: center;
+            }
+            .countdown-title { margin-bottom: 20px; font-size: 26px; }
+            .countdown-timer { gap: 20px; }
+            .timer-number { font-size: 38px; }
+
+            .about-section { justify-content: center; text-align: center; padding: 80px 5%; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content { max-width: 90vw; max-height: 85vh; object-fit: contain; }
+        .close-modal { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 50px; cursor: pointer; }
+
+        footer { background: #000; padding: 120px 0 60px; text-align: center; border-top: 1px solid #111; }
+        .footer-book-btn { display: inline-block; background: var(--primary-pink); padding: 18px 50px; color: white; text-decoration: none; font-family: 'Oswald'; font-weight: bold; font-size: 22px; margin-bottom: 60px; }
+        .social-links a { color: white; margin: 0 20px; font-size: 24px; transition: 0.3s; }
+        .social-links a:hover { color: var(--primary-pink); }
+        .copyright { margin-top: 50px; font-size: 12px; color: #444; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="hamburger" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+        
+        <nav class="nav-group">
+            <a href="#home">HOME</a>
+            <a href="#about">ABOUT</a>
+        </nav>
+        
+        <div class="center-logo-box">
+            <img src="https://via.placeholder.com/150x80/000/fff?text=ROCKSTAR" alt="Rockstar Logo" class="center-logo">
+        </div>
+
+        <nav class="nav-group right">
+            <a href="/events.html">SHOWS</a>
+            <a href="#gallery">GALLERY</a>
+            <a href="mailto:booking@rockstar-band.com" class="btn-book-nav">BOOK US!!!</a>
+        </nav>
+
+        <nav id="mobileMenu">
+            <a href="#home" onclick="toggleMenu()">HOME</a>
+            <a href="#about" onclick="toggleMenu()">ABOUT</a>
+            <a href="rockstar-website/events.html" onclick="toggleMenu()">SHOWS</a>
+            <a href="#gallery" onclick="toggleMenu()">GALLERY</a>
+            <a href="mailto:booking@rockstar-band.com" class="btn-book-nav">BOOK US!!!</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="countdown-wrapper">
+            <div class="countdown-title">Countdown to our show!</div>
+            <div class="countdown-timer">
+                <div class="timer-group"><span class="timer-label">Days</span><div class="timer-number" id="days">00</div></div>
+                <div class="timer-group"><span class="timer-label">Hours</span><div class="timer-number" id="hours">00</div></div>
+                <div class="timer-group"><span class="timer-label">Minutes</span><div class="timer-number" id="mins">00</div></div>
+                <div class="timer-group"><span class="timer-label">Seconds</span><div class="timer-number" id="secs">00</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="about-content">
+            <h2>About Rockstar</h2>
+            <p>The Ultimate Arena Rock Experience is an explosive, larger-than-life experience that takes you on a wild ride through the heart of arena rock. Known for their jaw-dropping live performances, Rockstar brings the swagger, style, and sound that will leave you breathless.</p>
+            <p>The magic happens when the character changes kick in. You'll see the singer transition into Freddy Mercury, Dee Snyder, Axl Rose, David Lee Roth, and more! These dramatic shifts bring the music to life, making each performance a dynamic celebration of rock’s greatest icons.</p>
+        </div>
+    </section>
+
+    <div class="section-header" id="gallery">ROCKSTAR GALLERY!</div>
+    <div class="gallery-grid">
+        <img src="assets/images/w1.jpg" class="gallery-img" onclick="openModal(this.src)">
+        <img src="assets/images/q1.jpg" class="gallery-img" onclick="openModal(this.src)">
+        <img src="assets/images/q14.jpg" class="gallery-img" onclick="openModal(this.src)">
+        <img src="assets/images/q20.jpg" class="gallery-img" onclick="openModal(this.src)">
+        <img src="assets/images/w5.jpg" class="gallery-img" onclick="openModal(this.src)">
+        <img src="assets/images/w10.jpg" class="gallery-img" onclick="openModal(this.src)">
+    </div>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg" onclick="event.stopPropagation()">
+    </div>
+
+    <footer>
+        <a href="mailto:booking@rockstar-band.com" class="footer-book-btn">BOOK US!!</a>
+        <div class="social-links">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+        <div class="copyright">© 2026 ROCKSTAR BAND. ALL RIGHTS RESERVED.</div>
+    </footer>
+
+    <script>
+        // Menu Toggle
+        function toggleMenu() {
+            document.getElementById("mobileMenu").classList.toggle("active");
+        }
+
+        // Functional Countdown
+        const targetDate = new Date("May 2, 2026 20:00:00").getTime();
+        
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            
+            if (diff > 0) {
+                document.getElementById("days").innerHTML = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById("hours").innerHTML = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("mins").innerHTML = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("secs").innerHTML = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }, 1000);
+
+        // Modal Logic
+        function openModal(src) {
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImg");
+            modal.style.display = "flex";
+            modalImg.src = src;
+            document.body.style.overflow = "hidden";
+        }
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    </script>
+
+</body>
+</html>

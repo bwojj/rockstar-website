@@ -56,15 +56,13 @@
         .nav-group a:hover { color: var(--primary-pink); text-shadow: 0 0 15px rgba(255, 77, 109, 1); }
 
         .center-logo-box {
-            background: white;
-            padding: 12px;
-            border-radius: 4px;
+            /* Logo Background Fix */
             display: flex;
             align-items: center;
             margin: 0 40px;
             flex-shrink: 0;
         }
-        .center-logo { width: 100px; height: auto; }
+        .center-logo { width: 110px; height: auto; }
 
         .header-right-anchor { width: 140px; display: flex; justify-content: flex-end; }
 
@@ -88,7 +86,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: flex-end; /* Aligns content to bottom */
+            padding-bottom: 15px; /* Tiny space under countdown */
             margin-bottom: 60px; 
         }
 
@@ -121,26 +120,26 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4));
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6));
             z-index: 2;
         }
 
-        /* --- COUNTDOWN FIX --- */
+        /* --- COUNTDOWN --- */
         .countdown-wrapper {
             position: relative;
             z-index: 10;
             width: 90%; 
-            max-width: 1200px;
-            margin-bottom: 40px; 
-            background: rgba(0, 0, 0, 0.6); 
+            max-width: 1100px;
+            background: rgba(0, 0, 0, 0.75); 
             backdrop-filter: blur(15px); 
             -webkit-backdrop-filter: blur(15px);
-            padding: 40px;
+            padding: 30px 40px;
             display: flex;
             justify-content: space-around;
             align-items: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
+            margin: 0; /* Ensures it stays at the very bottom padding of hero */
         }
 
         .countdown-title {
@@ -162,7 +161,7 @@
         .timer-group { text-align: center; }
 
         .timer-number { 
-            font-size: 64px; 
+            font-size: 60px; 
             font-family: 'Oswald', sans-serif; 
             font-weight: 700; 
             line-height: 1; 
@@ -180,18 +179,37 @@
             display: block;
         }
 
-        /* --- 3. ABOUT --- */
+        /* --- 3. ABOUT SECTION --- */
         .about-section {
-            padding: 60px 10%;
-            background: linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.9) 80%),
+            padding: 100px 10%;
+            background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.9) 80%),
                         url('assets/images/w44.jpg') center/cover;
             display: flex;
             justify-content: flex-end;
             align-items: center;
         }
-        .about-content { max-width: 800px; }
-        .about-content h2 { font-family: 'Montserrat'; font-size: 50px; margin-bottom: 20px; text-shadow: var(--text-glow); }
-        .about-content p { font-size: 17px; color: #ddd; line-height: 1.8; }
+        .about-content { 
+            max-width: 850px; 
+            background: rgba(0,0,0,0.4);
+            padding: 40px;
+            border-left: 4px solid var(--primary-pink);
+        }
+        .about-content h2 { 
+            font-family: 'Montserrat'; 
+            font-size: 55px; 
+            margin-bottom: 30px; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: var(--text-glow); 
+        }
+        .about-content p { 
+            font-size: 18px; 
+            color: #efefef; 
+            line-height: 1.8; 
+            font-weight: 300;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
 
         /* --- 4. MEDIA GRIDS --- */
         .section-header { text-align: center; font-family: 'Oswald'; font-size: 36px; padding: 80px 0 40px; text-shadow: var(--text-glow); }
@@ -216,7 +234,6 @@
         .gallery-img:hover { transform: scale(1.03); opacity: 0.8; filter: grayscale(0%); border-color: var(--primary-pink); }
         .hidden-item { display: none; }
 
-        /* --- REELS FIX --- */
         .reel-embed-container {
             display: flex;
             justify-content: center;
@@ -262,6 +279,7 @@
             .countdown-wrapper { flex-direction: column; text-align: center; gap: 30px; }
             .countdown-timer { gap: 20px; }
             .media-grid { grid-template-columns: 1fr; }
+            .about-content h2 { font-size: 35px; }
         }
     </style>
 </head>
@@ -307,13 +325,13 @@
     <section class="about-section" id="about">
         <div class="about-content">
             <h2>About Rockstar</h2>
-            <p>The Ultimate Arena Rock Experience is an explosive, larger-than-life experience that takes you on a wild ride through the heart of arena rock. Known for their jaw-dropping live performances, Rockstar brings the swagger, style, and sound that will leave you breathless. ROCKSTAR doesn’t just perform the songs; they become the legends, channeling the energy and spirit of rock’s most iconic performers.
+            <p>The Ultimate Arena Rock Experience is an explosive, larger-than-life experience that takes you on a wild ride through the heart of arena rock. Known for their jaw-dropping live performances, Rockstar brings the swagger, style, and sound that will leave you breathless. ROCKSTAR doesn’t just perform the songs; they become the legends, channeling the energy and spirit of rock’s most iconic performers.</p>
+            
+            <p>With their wild, outfits and over-the-top stage presence, ROCKSTAR delivers a show that’s as visually stunning as it is sonically unforgettable. From the first note to the last, their sound is a flawless mirror of high -voltage 70s and 80s anthems you know and love, performing each song as it sounds on the album.</p>
 
-With their wild,outfits and over-the-top stage presence, ROCKSTAR delivers a show that’s as visually stunning as it is sonically unforgettable. From the first note to the last, their sound is a flawless mirror of high -voltage 70s and 80s anthems you know and love, performing each song as it sounds on the album.
+            <p>The magic happens when the character changes kick in. As they tear through their set, the Lead Singer transforms before your eyes into the personas of rock gods who shaped the genre. From a riff-heavy, leather-clad hero, to a glam rocker, this powerful showman commands the stage with 4 outstanding musicians and vocalists. You’ll see the singer transition into Freddy Mercury, Dee Snyder, Axl Rose, David Lee Roth, Alice Cooper, Brian Johnson, Steve Perry, Ozzy and more! These dramatic shifts bring the music to life, making each performance a dynamic celebration of rock’s greatest icons.</p>
 
-The magic happens when the character changes kick in. As they tear through their set, the Lead Singer transforms before your eyes into the personas of rock gods who shaped the genre. From a riff-heavy, leather-clad hero, to a glam rocker, this powerful showman commands the stage with 4 outstanding musicians and vocalists. You’ll see the singer transition into Freddy Mercury, Dee Snyder, Axl Rose, David Lee Roth, Alice Cooper, Brian Johnson, Steve Perry, Ozzy and more! These dramatic shifts bring the music to life, making each performance a dynamic celebration of rock’s greatest icons.
-
-With ROCKSTAR, you’ll enjoy an arena rock spectacle you’ll never forget, blending world-class musicianship with a whole lot of attitude, nostalgia, and fun. So, buckle up and get ready to witness the ultimate Rock ‘n’ Roll journey — where legends are resurrected in real time!</p>
+            <p>With ROCKSTAR, you’ll enjoy an arena rock spectacle you’ll never forget, blending world-class musicianship with a whole lot of attitude, nostalgia, and fun. So, buckle up and get ready to witness the ultimate Rock ‘n’ Roll journey — where legends are resurrected in real time!</p>
         </div>
     </section>
 
@@ -365,7 +383,7 @@ With ROCKSTAR, you’ll enjoy an arena rock spectacle you’ll never forget, ble
     <footer>
         <div class="social-links">
             <a href="https://www.facebook.com/RockStar80sBand" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/c/RockStarTributeBand/videos"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.youtube.com/c/RockStarTributeBand/videos" target="_blank"><i class="fa-brands fa-youtube"></i></a>
         </div>
         <div class="copyright">© 2026 ROCKSTAR BAND. ALL RIGHTS RESERVED.</div>
     </footer>
@@ -378,7 +396,6 @@ With ROCKSTAR, you’ll enjoy an arena rock spectacle you’ll never forget, ble
     </div>
 
     <script>
-        // Carousel Logic
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         setInterval(() => {
@@ -387,7 +404,6 @@ With ROCKSTAR, you’ll enjoy an arena rock spectacle you’ll never forget, ble
             slides[currentSlide].classList.add('active');
         }, 5000);
 
-        // Load More Toggle
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         let isExpanded = false;
         loadMoreBtn.addEventListener('click', function() {
@@ -404,7 +420,6 @@ With ROCKSTAR, you’ll enjoy an arena rock spectacle you’ll never forget, ble
             updateImageList(); 
         });
 
-        // Countdown Logic
         const targetDate = new Date("May 2, 2026 20:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -417,7 +432,6 @@ With ROCKSTAR, you’ll enjoy an arena rock spectacle you’ll never forget, ble
             }
         }, 1000);
 
-        // Modal
         let currentIndex = 0;
         let images = [];
         function updateImageList() { images = Array.from(document.querySelectorAll('.gallery-img')).map(img => img.src); }

@@ -20,36 +20,74 @@
         html { scroll-behavior: smooth; }
         body { background-color: var(--bg-black); color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
 
-        /* --- 1. HEADER --- */
+        /* --- 1. HEADER (Matched to Index) --- */
         header {
             background: rgba(0, 0, 0, 0.95);
-            height: 120px;
+            height: 130px;
             padding: 0 5%;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
         }
-        .nav-group { display: flex; align-items: center; flex: 1; }
-        .nav-group.right { justify-content: flex-end; }
-        .nav-group a {
-            color: white; text-decoration: none; margin: 0 20px;
-            font-family: 'Oswald'; font-size: 18px; letter-spacing: 1.5px;
-            text-shadow: var(--text-glow); transition: 0.3s ease; text-transform: uppercase;
+
+        .header-center-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            margin-left: 140px; 
         }
-        .nav-group a:hover { color: var(--primary-pink); text-shadow: 0 0 15px rgba(255, 77, 109, 1); }
-        .center-logo-box { background: white; padding: 10px; border-radius: 4px; display: flex; align-items: center; margin: 0 30px; }
-        .center-logo { width: 90px; height: auto; }
+
+        .nav-group { display: flex; align-items: center; }
+
+        .nav-group a {
+            color: white;
+            text-decoration: none;
+            margin: 0 25px;
+            font-family: 'Oswald';
+            font-size: 20px;
+            letter-spacing: 2px;
+            text-shadow: var(--text-glow);
+            transition: 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-group a:hover, .nav-group a.active {
+            color: var(--primary-pink);
+            text-shadow: 0 0 15px rgba(255, 77, 109, 1);
+        }
+
+        .center-logo-box {
+            background: white;
+            padding: 12px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            margin: 0 40px;
+            flex-shrink: 0;
+        }
+        .center-logo { width: 100px; height: auto; }
+
+        .header-right-anchor { width: 140px; display: flex; justify-content: flex-end; }
+
         .btn-book-nav {
-            background: var(--primary-pink); color: white !important; padding: 12px 25px;
-            text-decoration: none; font-family: 'Oswald'; font-weight: bold; border-radius: 2px;
+            background: var(--primary-pink);
+            color: white !important;
+            padding: 14px 30px;
+            text-decoration: none;
+            font-family: 'Oswald';
+            font-weight: bold;
+            border-radius: 2px;
+            text-shadow: none !important;
+            margin: 0 !important;
         }
 
         .hamburger { display: none; font-size: 30px; cursor: pointer; color: white; }
+
         #mobileMenu {
-            display: none; position: fixed; top: 120px; left: 0; width: 100%;
+            display: none; position: fixed; top: 100px; left: 0; width: 100%;
             background: rgba(0,0,0,0.98); flex-direction: column; padding: 40px 0;
             border-bottom: 2px solid var(--primary-pink); z-index: 999; text-align: center;
         }
@@ -59,7 +97,7 @@
         /* --- 2. HERO --- */
         .events-hero {
             position: relative; height: 400px;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/images/header.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/images/header2.jpg') center/cover no-repeat;
             display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
         }
         .events-hero h1 { font-family: 'Montserrat'; font-size: 60px; text-transform: capitalize; margin-bottom: 10px; letter-spacing: 2px; text-shadow: var(--text-glow); }
@@ -146,17 +184,20 @@
         .no-shows { text-align: center; padding: 100px 0; border: 1px dashed #333; color: #444; font-family: 'Oswald'; font-size: 24px; text-transform: uppercase; }
 
         /* --- 4. FOOTER --- */
-        footer { background: #000; padding: 120px 0 60px; text-align: center; border-top: 1px solid #111; }
+        footer { background: #000; padding: 80px 0 60px; text-align: center; border-top: 1px solid #111; }
         .social-links { margin-bottom: 30px; }
         .social-links a { color: white; margin: 0 15px; font-size: 22px; transition: 0.3s; }
         .social-links a:hover { color: var(--primary-pink); text-shadow: var(--text-glow); }
         .copyright { margin-top: 50px; font-size: 12px; color: #444; letter-spacing: 2px; }
 
-        @media (max-width: 768px) {
-            header { height: 100px; }
+        @media (max-width: 1024px) {
+            header { height: 100px; justify-content: space-between; }
+            .header-center-wrap { margin-left: 0; }
+            .header-right-anchor, .nav-group { display: none; }
             .hamburger { display: block; order: 1; }
-            .center-logo-box { order: 2; margin: 0; }
-            .nav-group { display: none; }
+            .center-logo-box { order: 2; margin: 0; padding: 8px; }
+            .center-logo { width: 80px; }
+            #mobileMenu.active { display: flex; }
             
             .event-box { 
                 flex-direction: column; 
@@ -165,18 +206,6 @@
                 padding: 30px; 
             }
             .event-date-venue h3 { font-size: 28px; }
-            
-            .event-actions { 
-                width: 100%; 
-                display: flex;
-                justify-content: center; /* Center the button container */
-            }
-            .ticket-btn { 
-                width: auto; 
-                min-width: 200px; /* Give it a consistent base size */
-                max-width: 250px; /* Constrain width as requested */
-                padding: 12px 20px;
-            }
             .events-hero h1 { font-size: 45px; }
         }
     </style>
@@ -185,18 +214,27 @@
 
     <header>
         <div class="hamburger" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
-        <nav class="nav-group">
-            <a href="index.html">HOME</a>
-            <a href="index.html#about">ABOUT</a>
-        </nav>
-        <div class="center-logo-box">
-            <img src="https://via.placeholder.com/150x80/000/fff?text=ROCKSTAR" alt="Rockstar Logo" class="center-logo">
+        
+        <div class="header-center-wrap">
+            <nav class="nav-group">
+                <a href="index.html">HOME</a>
+                <a href="index.html#about">ABOUT</a>
+            </nav>
+            
+            <div class="center-logo-box">
+                <img src="assets/images/logo.png" alt="Rockstar Logo" class="center-logo">
+            </div>
+
+            <nav class="nav-group">
+                <a href="#" class="active">SHOWS</a>
+                <a href="index.html#gallery">GALLERY</a>
+            </nav>
         </div>
-        <nav class="nav-group right">
-            <a href="#" class="active">SHOWS</a>
-            <a href="index.html#gallery">GALLERY</a>
+
+        <div class="header-right-anchor">
             <a href="mailto:booking@rockstar-band.com" class="btn-book-nav">BOOK US!!!</a>
-        </nav>
+        </div>
+
         <nav id="mobileMenu">
             <a href="index.html" onclick="toggleMenu()">HOME</a>
             <a href="index.html#about" onclick="toggleMenu()">ABOUT</a>
@@ -222,10 +260,8 @@
 
     <footer>
         <div class="social-links">
-            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.facebook.com/RockStar80sBand"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/c/RockStarTributeBand/videos"><i class="fa-brands fa-youtube"></i></a>
         </div>
         <div class="copyright">© 2026 ROCKSTAR BAND. ALL RIGHTS RESERVED.</div>
     </footer>

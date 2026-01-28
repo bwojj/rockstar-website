@@ -20,16 +20,16 @@
         html { scroll-behavior: smooth; }
         body { background-color: var(--bg-black); color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
 
-        /* --- 1. HEADER (Matched to Index) --- */
+        /* --- 1. HEADER --- */
         header {
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.75);
             height: 130px;
             padding: 0 5%;
             display: flex;
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 2000;
         }
 
         .header-center-wrap {
@@ -37,7 +37,6 @@
             align-items: center;
             justify-content: center;
             flex-grow: 1;
-            margin-left: 140px; 
         }
 
         .nav-group { display: flex; align-items: center; }
@@ -60,50 +59,87 @@
         }
 
         .center-logo-box {
-            padding: 12px;
-            border-radius: 4px;
             display: flex;
             align-items: center;
             margin: 0 40px;
             flex-shrink: 0;
         }
-        .center-logo { width: 100px; height: auto; }
 
-        .header-right-anchor { width: 140px; display: flex; justify-content: flex-end; }
+        .center-logo { 
+            width: auto; 
+            height: 110px; 
+            transition: transform 0.25s ease, filter 0.25s ease;
+        }
 
-        .btn-book-nav {
-            background: var(--primary-pink);
-            color: white !important;
-            padding: 14px 30px;
+        .center-logo:hover {
+            transform: scale(1.08);
+            filter: brightness(1.15);
+        }
+
+        /* --- HAMBURGER MENU --- */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 2100;
+            background: none;
+            border: none;
+            padding: 0;
+            position: absolute;
+            right: 5%;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease-in-out;
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        /* Mobile Nav Overlay */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.4s ease-in-out;
+            z-index: 1050;
+        }
+
+        .mobile-nav.active { right: 0; }
+
+        .mobile-nav a {
+            color: white;
             text-decoration: none;
             font-family: 'Oswald';
-            font-weight: bold;
-            border-radius: 2px;
-            text-shadow: none !important;
-            margin: 0 !important;
+            font-size: 32px;
+            margin: 20px 0;
+            text-shadow: var(--text-glow);
         }
-
-        .hamburger { display: none; font-size: 30px; cursor: pointer; color: white; }
-
-        #mobileMenu {
-            display: none; position: fixed; top: 100px; left: 0; width: 100%;
-            background: rgba(0,0,0,0.98); flex-direction: column; padding: 40px 0;
-            border-bottom: 2px solid var(--primary-pink); z-index: 999; text-align: center;
-        }
-        #mobileMenu.active { display: flex; }
-        #mobileMenu a { color: white; text-decoration: none; margin: 15px 0; font-family: 'Oswald'; font-size: 24px; display: block; }
 
         /* --- 2. HERO --- */
         .events-hero {
             position: relative; height: 400px;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/images/header2.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/images/events.jpg') center/cover no-repeat;
             display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
         }
         .events-hero h1 { font-family: 'Montserrat'; font-size: 60px; text-transform: capitalize; margin-bottom: 10px; letter-spacing: 2px; text-shadow: var(--text-glow); }
-        .breadcrumb { font-family: 'Roboto'; font-size: 16px; color: #ccc; }
-        .breadcrumb a { color: #fff; text-decoration: none; }
-        .breadcrumb span { color: var(--primary-pink); margin: 0 10px; }
-
+        
         /* --- 3. EVENTS SECTION --- */
         .events-section { padding: 80px 5%; background-color: var(--bg-black); min-height: 600px; }
         .section-title { text-align: center; font-family: 'Oswald'; font-size: 42px; color: #fff; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 60px; }
@@ -137,10 +173,7 @@
         .event-box::before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
+            left: 0; top: 0; height: 100%; width: 4px;
             background: var(--primary-pink);
             box-shadow: var(--text-glow);
         }
@@ -189,65 +222,192 @@
         .social-links a:hover { color: var(--primary-pink); text-shadow: var(--text-glow); }
         .copyright { margin-top: 50px; font-size: 12px; color: #444; letter-spacing: 2px; }
 
+        /* --- CONTACT FORM MODAL --- */
+        .contact-modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 4000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.92);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contact-modal-overlay.active { display: flex; }
+
+        .contact-modal {
+            background: #111;
+            border: 1px solid rgba(255, 77, 109, 0.3);
+            border-radius: 8px;
+            padding: 50px 40px;
+            width: 90%;
+            max-width: 520px;
+            position: relative;
+            box-shadow: 0 0 40px rgba(255, 77, 109, 0.15);
+        }
+
+        .contact-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #fff;
+            font-size: 32px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .contact-modal-close:hover { color: var(--primary-pink); }
+
+        .contact-modal h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            text-transform: uppercase;
+            text-shadow: var(--text-glow);
+            margin-bottom: 8px;
+            text-align: center;
+            color: white;
+        }
+
+        .contact-modal p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+            color: #aaa;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-form-group { margin-bottom: 18px; }
+
+        .contact-form-group label {
+            display: block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #ccc;
+            margin-bottom: 6px;
+        }
+
+        .contact-form-group input,
+        .contact-form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: #1a1a1a !important;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: white !important;
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+            transition: border-color 0.3s;
+            outline: none;
+            -webkit-text-fill-color: white !important;
+        }
+
+        .contact-form-group input:-webkit-autofill,
+        .contact-form-group input:-webkit-autofill:hover,
+        .contact-form-group input:-webkit-autofill:focus,
+        .contact-form-group textarea:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px #1a1a1a inset !important;
+            -webkit-text-fill-color: white !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .contact-form-group input:focus,
+        .contact-form-group textarea:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 8px rgba(255, 77, 109, 0.3);
+        }
+
+        .contact-form-group textarea { height: 120px; resize: vertical; }
+
+        .contact-form-submit {
+            display: block;
+            width: 100%;
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
+
+        .contact-form-submit:hover {
+            box-shadow: 0 0 18px rgba(255, 77, 109, 0.9), 0 0 40px rgba(255, 77, 109, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .contact-form-status {
+            text-align: center;
+            margin-top: 15px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: var(--primary-pink);
+            min-height: 20px;
+        }
+
         @media (max-width: 1024px) {
-            header { height: 100px; justify-content: space-between; }
-            .header-center-wrap { margin-left: 0; }
-            .header-right-anchor, .nav-group { display: none; }
-            .hamburger { display: block; order: 1; }
-            .center-logo-box { order: 2; margin: 0; padding: 8px; }
-            .center-logo { width: 80px; }
-            #mobileMenu.active { display: flex; }
-            
-            .event-box { 
-                flex-direction: column; 
-                text-align: center; 
-                gap: 25px; 
-                padding: 30px; 
-            }
+            header { height: 100px; }
+            .header-center-wrap { position: absolute; left: 50%; transform: translateX(-50%); }
+            .nav-group { display: none; }
+            .hamburger { display: flex; }
+            .center-logo { height: 70px; width: auto; }
+            .event-box { flex-direction: column; text-align: center; gap: 25px; padding: 30px; }
             .event-date-venue h3 { font-size: 28px; }
             .events-hero h1 { font-size: 45px; }
+        }
+
+        @media (max-width: 480px) {
+            .contact-modal { padding: 35px 20px; width: 95%; }
+            .contact-modal h2 { font-size: 28px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="hamburger" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
-        
         <div class="header-center-wrap">
             <nav class="nav-group">
                 <a href="index.html">HOME</a>
                 <a href="index.html#about">ABOUT</a>
+                <a href="events.html" class="active">SHOWS</a>
             </nav>
-            
             <div class="center-logo-box">
-                <img src="assets/images/logo.png" alt="Rockstar Logo" class="center-logo">
+                <a href="index.html"><img src="assets/images/logo.png" alt="Rockstar Logo" class="center-logo"></a>
             </div>
-
             <nav class="nav-group">
-                <a href="#" class="active">SHOWS</a>
                 <a href="index.html#gallery">GALLERY</a>
+                <a href="book-us.html">BOOK-US</a>
+                <a href="#" onclick="openContactModal(); return false;">CONTACT</a>
             </nav>
         </div>
-
-        <div class="header-right-anchor">
-            <a href="mailto:booking@rockstar-band.com" class="btn-book-nav">BOOK US!!!</a>
-        </div>
-
-        <nav id="mobileMenu">
-            <a href="index.html" onclick="toggleMenu()">HOME</a>
-            <a href="index.html#about" onclick="toggleMenu()">ABOUT</a>
-            <a href="#" class="active">SHOWS</a>
-            <a href="index.html#gallery" onclick="toggleMenu()">GALLERY</a>
-            <a href="mailto:booking@rockstar-band.com" class="btn-book-nav">BOOK US!!!</a>
-        </nav>
+        <button class="hamburger" id="hamBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html" onclick="toggleMenu()">HOME</a>
+        <a href="index.html#about" onclick="toggleMenu()">ABOUT</a>
+        <a href="#" class="active" onclick="toggleMenu()">SHOWS</a>
+        <a href="index.html#gallery" onclick="toggleMenu()">GALLERY</a>
+        <a href="book-us.html" onclick="toggleMenu()">BOOK-US</a>
+        <a href="#" onclick="toggleMenu(); openContactModal(); return false;">CONTACT</a>
+    </nav>
 
     <section class="events-hero">
         <h1>Upcoming Shows</h1>
-        <div class="breadcrumb">
-            <a href="index.html">Home</a> <span><i class="fa-solid fa-chevron-right" style="font-size: 12px;"></i></span> Shows
-        </div>
     </section>
 
     <section class="events-section">
@@ -256,6 +416,32 @@
             <div class="no-shows">Searching for the next arena...</div>
         </div>
     </section>
+
+    <div id="contactModal" class="contact-modal-overlay" onclick="closeContactModal()">
+        <div class="contact-modal" onclick="event.stopPropagation()">
+            <button class="contact-modal-close" onclick="closeContactModal()">&times;</button>
+            <h2>Contact Us</h2>
+            <p>Have a question? Drop us a line and we'll get back to you.</p>
+            <form id="contactForm" onsubmit="submitContactForm(event)">
+                <input type="hidden" name="_subject" value="Events Page Contact Form Submission">
+                <input type="hidden" name="Form Source" value="Events Page Contact">
+                <div class="contact-form-group">
+                    <label for="contactName">Name</label>
+                    <input type="text" id="contactName" name="name" required>
+                </div>
+                <div class="contact-form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail" name="email" required>
+                </div>
+                <div class="contact-form-group">
+                    <label for="contactMessage">Message</label>
+                    <textarea id="contactMessage" name="message" required></textarea>
+                </div>
+                <button type="submit" class="contact-form-submit">SEND MESSAGE</button>
+            </form>
+            <div class="contact-form-status" id="contactFormStatus"></div>
+        </div>
+    </div>
 
     <footer>
         <div class="social-links">
@@ -266,37 +452,64 @@
     </footer>
 
     <script>
-        function toggleMenu() { document.getElementById("mobileMenu").classList.toggle("active"); }
+        const hamBtn = document.getElementById('hamBtn');
+        const mobileNav = document.getElementById('mobileNav');
 
+        function toggleMenu() {
+            hamBtn.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        hamBtn.addEventListener('click', toggleMenu);
+
+        // --- GOOGLE SHEETS DATA ---
         const SHEET_ID = '1TyhhvUyz2HDJ2w8JuAHrHUjXN1FeP9ihltL7weCzh7Y';
-        const FULL_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+        const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
 
         async function loadEvents() {
             try {
-                const response = await fetch(FULL_URL);
-                if (!response.ok) throw new Error("Fetch failed.");
+                const response = await fetch(URL);
+                if (!response.ok) throw new Error('Network response was not ok');
                 
                 const text = await response.text();
-                const jsonData = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
-                const rows = jsonData.table.rows;
+                const jsonStart = text.indexOf('{');
+                const jsonEnd = text.lastIndexOf('}');
+                if (jsonStart === -1 || jsonEnd === -1) throw new Error('Invalid JSON format from Sheet');
+                
+                const json = JSON.parse(text.substring(jsonStart, jsonEnd + 1));
+                const rows = json.table.rows;
                 const container = document.getElementById('events-container');
 
-                if (!rows || rows.length <= 1) {
+                if (!rows || rows.length === 0) {
                     container.innerHTML = '<div class="no-shows">No Upcoming Events Scheduled</div>';
                     return;
                 }
 
                 let html = '';
-                for (let i = 1; i < rows.length; i++) {
+                
+                for (let i = 0; i < rows.length; i++) {
                     const row = rows[i].c;
-                    const dateRaw = row[0] ? (row[0].f || row[0].v) : 'TBA';
-                    const venue = row[1] ? row[1].v : 'Venue TBA';
-                    const location = row[2] ? row[2].v : '';
-                    const link = row[3] ? row[3].v : '#';
+                    if (!row) continue;
 
-                    let finalLink = '#';
-                    if (link && typeof link === 'string' && link !== '#') {
-                        finalLink = link.startsWith('http') ? link : 'https://' + link;
+                    const venue = (row[1] && row[1].v) ? row[1].v : 'Venue TBA';
+                    const dateRaw = (row[0] && (row[0].f || row[0].v)) ? (row[0].f || row[0].v) : 'Date TBA';
+                    const location = (row[2] && row[2].v) ? row[2].v : '';
+                    
+                    let rawLink = (row[3] && row[3].v) ? row[3].v.toString().trim() : '';
+                    let finalLink = ''; 
+
+                    if (rawLink) {
+                        // Ensure external links don't append to the local domain
+                        if (rawLink.toLowerCase().startsWith('http://') || rawLink.toLowerCase().startsWith('https://')) {
+                            finalLink = rawLink;
+                        } else {
+                            finalLink = 'https://' + rawLink;
+                        }
+                    } else {
+                        // Generate mailto with prepopulated subject: Ticket Request - {Venue} {Date}
+                        const emailSubject = encodeURIComponent(`Ticket Request - ${venue} ${dateRaw}`);
+                        finalLink = `mailto:booking@rockstar-band.com?subject=${emailSubject}`;
                     }
 
                     html += `
@@ -311,14 +524,64 @@
                         </div>
                     `;
                 }
+                
                 container.innerHTML = html;
+
             } catch (error) {
-                console.error("DETAILED ERROR:", error);
+                console.error("Error loading events:", error);
                 document.getElementById('events-container').innerHTML = 
-                    `<div class="no-shows">ERROR LOADING SHOWS. PLEASE ENSURE YOUR GOOGLE SHEET IS SHARED AS "ANYONE WITH THE LINK".</div>`;
+                    `<div class="no-shows">ERROR LOADING SHOWS. PLEASE CHECK YOUR SHEET SHARING SETTINGS.</div>`;
             }
         }
         loadEvents();
+
+        // --- Contact Form Modal ---
+        function openContactModal() {
+            document.getElementById('contactModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.getElementById('contactFormStatus').textContent = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('contactModal').classList.contains('active')) {
+                closeContactModal();
+            }
+        });
+
+        function submitContactForm(e) {
+            e.preventDefault();
+            var form = document.getElementById('contactForm');
+            var status = document.getElementById('contactFormStatus');
+            var submitBtn = form.querySelector('.contact-form-submit');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'SENDING...';
+
+            fetch('https://formspree.io/f/maqozlkj', {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(function(response) {
+                if (response.ok) {
+                    status.textContent = 'Message sent! We\'ll get back to you soon.';
+                    form.reset();
+                    setTimeout(function() { closeContactModal(); }, 2500);
+                } else {
+                    status.textContent = 'Something went wrong. Please try again.';
+                }
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'SEND MESSAGE';
+            }).catch(function() {
+                status.textContent = 'Connection error. Please try again.';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'SEND MESSAGE';
+            });
+        }
     </script>
 </body>
 </html>

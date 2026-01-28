@@ -6,29 +6,41 @@
     <title>RockStar - The Ultimate Arena Rock Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
         :root {
             --primary-pink: #ff4d6d;
             --bg-black: #000000;
             --text-glow: 0 0 10px rgba(255, 77, 109, 0.8), 0 0 20px rgba(255, 77, 109, 0.4);
+            --header-h: 130px;
         }
 
-        /* Base Reset */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { background-color: var(--bg-black); color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
 
         /* --- 1. HEADER --- */
         header {
-            background: rgba(0, 0, 0, 0.95);
-            height: 130px;
+            background: rgba(0, 0, 0, 0.75);
+            height: var(--header-h);
             padding: 0 5%;
             display: flex;
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 2000;
         }
 
         .header-center-wrap {
@@ -36,15 +48,17 @@
             align-items: center;
             justify-content: center;
             flex-grow: 1;
-            margin-left: 140px; 
         }
 
-        .nav-group { display: flex; align-items: center; }
+        .nav-group {
+            display: flex;
+            align-items: center;
+        }
 
         .nav-group a {
             color: white;
             text-decoration: none;
-            margin: 0 25px;
+            margin: 0 22px;
             font-family: 'Oswald';
             font-size: 20px;
             letter-spacing: 2px;
@@ -53,85 +67,113 @@
             white-space: nowrap;
         }
 
-        .nav-group a:hover { color: var(--primary-pink); text-shadow: 0 0 15px rgba(255, 77, 109, 1); }
+        .nav-group a:hover {
+            color: var(--primary-pink);
+            text-shadow: 0 0 15px rgba(255, 77, 109, 1);
+        }
 
         .center-logo-box {
-            /* Logo Background Fix */
             display: flex;
             align-items: center;
-            margin: 0 40px;
+            margin: 0 35px;
             flex-shrink: 0;
         }
-        .center-logo { width: 110px; height: auto; }
 
-        .header-right-anchor { width: 140px; display: flex; justify-content: flex-end; }
-
-        .btn-book-nav {
-            background: var(--primary-pink);
-            color: white !important;
-            padding: 14px 30px;
-            text-decoration: none;
-            font-family: 'Oswald';
-            font-weight: bold;
-            border-radius: 2px;
-            text-shadow: none !important;
+        .center-logo {
+            width: auto;
+            height: 110px;
+            transition: transform 0.25s ease, filter 0.25s ease;
         }
 
-        /* --- 2. HERO CAROUSEL --- */
-        .hero {
-            position: relative;
-            height: 100vh;
+        .center-logo:hover {
+            transform: scale(1.08);
+            filter: brightness(1.15);
+        }
+
+        /* --- HAMBURGER MENU --- */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 2100;
+            background: none;
+            border: none;
+            padding: 0;
+            position: absolute;
+            right: 5%;
+        }
+
+        .hamburger span {
+            display: block;
             width: 100%;
-            overflow: hidden;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease-in-out;
+            border-radius: 3px;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            justify-content: flex-end; /* Aligns content to bottom */
-            padding-bottom: 15px; /* Tiny space under countdown */
-            margin-bottom: 60px; 
+            transition: 0.4s ease-in-out;
+            z-index: 1050;
         }
 
-        .carousel-container {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .mobile-nav.active { right: 0; }
+
+        .mobile-nav a {
+            color: white;
+            text-decoration: none;
+            font-family: 'Oswald';
+            font-size: 30px;
+            margin: 12px 0;
+            text-shadow: var(--text-glow);
+        }
+
+        /* --- 2. HERO --- */
+        .hero-wrap { position: relative; }
+        .hero { position: relative; width: 100%; overflow: hidden; margin: 0; padding: 0; }
+        .hero-media { display: block; width: 100%; }
+        .hero-media img {
+            display: block;
             width: 100%;
-            height: 100%;
-            z-index: 1;
+            height: auto;
+            animation: heroIntro 1.4s ease-out both;
+            transform-origin: center;
         }
 
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            background-size: cover;
-            background-position: center;
+        @media (min-width: 769px) {
+            .hero { height: 75vh; min-height: 520px; }
+            .hero-media { position: absolute; inset: 0; }
+            .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
         }
 
-        .slide.active { opacity: 1; }
+        .hero-overlay { position: absolute; inset: 0; z-index: 2; }
 
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6));
-            z-index: 2;
-        }
-
-        /* --- COUNTDOWN --- */
+        /* --- 3. COUNTDOWN --- */
         .countdown-wrapper {
             position: relative;
             z-index: 10;
-            width: 90%; 
+            width: 90%;
             max-width: 1100px;
-            background: rgba(0, 0, 0, 0.75); 
-            backdrop-filter: blur(15px); 
+            background: rgba(0, 0, 0, 0.75);
+            opacity: 0.75;
+            backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             padding: 30px 40px;
             display: flex;
@@ -139,124 +181,69 @@
             align-items: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            margin: 0; /* Ensures it stays at the very bottom padding of hero */
+            margin: 20px auto 40px;   /* was: -70px auto 0; */
         }
 
         .countdown-title {
             font-family: 'Montserrat', sans-serif;
             font-size: 32px;
-            font-weight: 400; 
+            font-weight: 400;
             color: white;
             text-shadow: var(--text-glow);
             flex: 1;
         }
 
-        .countdown-timer {
-            display: flex;
-            gap: 50px;
-            flex: 2;
-            justify-content: center;
-        }
-
+        .countdown-timer { display: flex; gap: 50px; flex: 2; justify-content: center; }
         .timer-group { text-align: center; }
+        .timer-number { font-size: 60px; font-family: 'Oswald', sans-serif; font-weight: 700; line-height: 1; color: white; text-shadow: var(--text-glow); }
+        .timer-label { font-size: 14px; text-transform: uppercase; color: #ffffff; font-family: 'Montserrat', sans-serif; margin-top: 8px; opacity: 0.8; display: block; }
 
-        .timer-number { 
-            font-size: 60px; 
-            font-family: 'Oswald', sans-serif; 
-            font-weight: 700; 
-            line-height: 1; 
-            color: white; 
-            text-shadow: var(--text-glow);
-        }
-
-        .timer-label {
-            font-size: 14px;
-            text-transform: uppercase;
-            color: #ffffff;
-            font-family: 'Montserrat', sans-serif;
-            margin-top: 8px;
-            opacity: 0.8;
-            display: block;
-        }
-
-        /* --- 3. ABOUT SECTION --- */
+        /* --- 4. ABOUT SECTION --- */
         .about-section {
-            padding: 100px 10%;
-            background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.9) 80%),
-                        url('assets/images/w44.jpg') center/cover;
+            padding: 80px 10% 100px;
+            background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.9) 80%), url('assets/images/w44.jpg') center/cover;
             display: flex;
             justify-content: flex-end;
             align-items: center;
         }
-        .about-content { 
-            max-width: 850px; 
-            background: rgba(0,0,0,0.4);
-            padding: 40px;
-            border-left: 4px solid var(--primary-pink);
-        }
-        .about-content h2 { 
-            font-family: 'Montserrat'; 
-            font-size: 55px; 
-            margin-bottom: 30px; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: var(--text-glow); 
-        }
-        .about-content p { 
-            font-size: 18px; 
-            color: #efefef; 
-            line-height: 1.8; 
-            font-weight: 300;
-            text-align: justify;
-            margin-bottom: 20px;
-        }
 
-        /* --- 4. MEDIA GRIDS --- */
+        .about-content { max-width: 850px; background: rgba(0,0,0,0.4); padding: 40px; border-left: 4px solid var(--primary-pink); }
+        .about-content h2 { font-family: 'Montserrat'; font-size: 55px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; text-shadow: var(--text-glow); }
+        .about-content p { font-size: 18px; color: #efefef; line-height: 1.8; font-weight: 300; text-align: justify; margin-bottom: 20px; }
+
+        /* --- 5. MEDIA GRIDS --- */
         .section-header { text-align: center; font-family: 'Oswald'; font-size: 36px; padding: 80px 0 40px; text-shadow: var(--text-glow); }
-        
-        .media-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 0 5% 50px;
-        }
-
-        .gallery-img {
-            width: 100%;
-            aspect-ratio: 4/3;
-            object-fit: cover;
-            border: 1px solid #222;
-            transition: all 0.4s ease;
-            cursor: pointer;
-            filter: grayscale(20%);
-        }
-
+        .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 0 5% 50px; }
+        .gallery-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border: 1px solid #222; transition: all 0.4s ease; cursor: pointer; filter: grayscale(20%); }
         .gallery-img:hover { transform: scale(1.03); opacity: 0.8; filter: grayscale(0%); border-color: var(--primary-pink); }
         .hidden-item { display: none; }
 
-        .reel-embed-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #0a0a0a;
-            padding: 20px;
-            border: 1px solid #1a1a1a;
-            border-radius: 4px;
-        }
-
+        .reel-embed-container { display: flex; justify-content: center; align-items: center; background: #0a0a0a; padding: 20px; border: 1px solid #1a1a1a; border-radius: 4px; }
         .load-more-container { text-align: center; padding-bottom: 80px; }
-        .btn-load-more {
-            background: none; border: 2px solid var(--primary-pink); color: white;
-            padding: 15px 40px; font-family: 'Oswald'; font-size: 20px; cursor: pointer; transition: 0.3s;
-        }
+        .btn-load-more { background: none; border: 2px solid var(--primary-pink); color: white; padding: 15px 40px; font-family: 'Oswald'; font-size: 20px; cursor: pointer; transition: 0.3s; }
         .btn-load-more:hover { background: var(--primary-pink); box-shadow: var(--text-glow); }
 
-        /* --- 5. CONTACT --- */
+        /* --- 6. CONTACT --- */
         .contact-section { position: relative; padding: 100px 5%; text-align: center; border-top: 1px solid #111; }
         .contact-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('assets/images/w12.jpg') center/cover no-repeat; opacity: 0.15; z-index: 1; }
         .contact-content { position: relative; z-index: 2; }
         .contact-section h2 { font-family: 'Montserrat'; font-size: 48px; text-shadow: var(--text-glow); }
-        .footer-book-btn { display: inline-block; background: var(--primary-pink); padding: 18px 50px; color: white; text-decoration: none; font-family: 'Oswald'; font-weight: bold; font-size: 22px; margin-top: 40px; }
+
+        .footer-book-btn {
+            display: inline-block;
+            background: var(--primary-pink);
+            padding: 18px 50px;
+            color: white;
+            text-decoration: none;
+            font-family: 'Oswald';
+            font-weight: bold;
+            font-size: 22px;
+            margin-top: 40px;
+            animation: glowIdle 2.8s ease-in-out infinite;
+            will-change: transform, box-shadow;
+        }
+
+        .footer-book-btn:hover { animation: bounceGlowLoop 0.9s ease-in-out infinite; }
 
         footer { background: #000; padding: 40px 0 60px; text-align: center; }
         .social-links { margin-bottom: 40px; }
@@ -264,23 +251,258 @@
         .copyright { font-size: 12px; color: #444; letter-spacing: 2px; }
 
         /* --- MODAL --- */
-        .modal {
-            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center;
-        }
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; }
         .modal-content { max-width: 85vw; max-height: 85vh; object-fit: contain; }
         .close-modal { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 50px; cursor: pointer; }
-        .modal-btn { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 60px; background: none; border: none; cursor: pointer; padding: 20px; z-index: 2100; }
-        .prev-btn { left: 20px; } .next-btn { right: 20px; }
+        .modal-btn { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 60px; background: none; border: none; cursor: pointer; padding: 20px; z-index: 3100; }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
 
-        @media (max-width: 1024px) {
-            .header-center-wrap { margin-left: 0; }
-            .header-right-anchor, .nav-group { display: none; }
-            .countdown-wrapper { flex-direction: column; text-align: center; gap: 30px; }
-            .countdown-timer { gap: 20px; }
-            .media-grid { grid-template-columns: 1fr; }
-            .about-content h2 { font-size: 35px; }
+        /* --- CONTACT FORM MODAL --- */
+        .contact-modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 4000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.92);
+            justify-content: center;
+            align-items: center;
         }
+
+        .contact-modal-overlay.active {
+            display: flex;
+        }
+
+        .contact-modal {
+            background: #111;
+            border: 1px solid rgba(255, 77, 109, 0.3);
+            border-radius: 8px;
+            padding: 50px 40px;
+            width: 90%;
+            max-width: 520px;
+            position: relative;
+            box-shadow: 0 0 40px rgba(255, 77, 109, 0.15);
+        }
+
+        .contact-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #fff;
+            font-size: 32px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .contact-modal-close:hover {
+            color: var(--primary-pink);
+        }
+
+        .contact-modal h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            text-transform: uppercase;
+            text-shadow: var(--text-glow);
+            margin-bottom: 8px;
+            text-align: center;
+            color: white;
+        }
+
+        .contact-modal p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+            color: #aaa;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-form-group {
+            margin-bottom: 18px;
+        }
+
+        .contact-form-group label {
+            display: block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #ccc;
+            margin-bottom: 6px;
+        }
+
+        .contact-form-group input,
+        .contact-form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: #1a1a1a !important;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: white !important;
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+            transition: border-color 0.3s;
+            outline: none;
+            -webkit-text-fill-color: white !important;
+        }
+
+        .contact-form-group input:-webkit-autofill,
+        .contact-form-group input:-webkit-autofill:hover,
+        .contact-form-group input:-webkit-autofill:focus,
+        .contact-form-group textarea:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px #1a1a1a inset !important;
+            -webkit-text-fill-color: white !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .contact-form-group input:focus,
+        .contact-form-group textarea:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 8px rgba(255, 77, 109, 0.3);
+        }
+
+        .contact-form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form-submit {
+            display: block;
+            width: 100%;
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
+
+        .contact-form-submit:hover {
+            box-shadow: 0 0 18px rgba(255, 77, 109, 0.9), 0 0 40px rgba(255, 77, 109, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .contact-form-status {
+            text-align: center;
+            margin-top: 15px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: var(--primary-pink);
+            min-height: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .contact-modal {
+                padding: 35px 20px;
+                width: 95%;
+            }
+            .contact-modal h2 {
+                font-size: 28px;
+            }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            :root { --header-h: 100px; }
+            header { height: var(--header-h); }
+            .header-center-wrap { margin-left: 0; }
+            .nav-group { display: none; }
+            .hamburger { display: flex; }
+
+            .countdown-wrapper {
+                position: relative;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+                padding: 15px;
+                width: 100%;
+                background: #0c0c0c;
+                border: none;
+                border-radius: 0;
+                margin-top: 0;
+                margin-bottom: 10px;
+            }
+
+            .countdown-title { font-size: 18px; }
+            .countdown-timer { gap: 15px; }
+            .timer-number { font-size: 32px; }
+            .timer-label { font-size: 10px; }
+
+            .media-grid { grid-template-columns: 1fr; padding: 0 5% 30px; }
+            .about-section { padding: 40px 5%; }
+            .about-content h2 { font-size: 28px; margin-bottom: 15px; }
+            .center-logo { height: 70px; }
+        }
+
+        @keyframes glowIdle {
+            0%, 100% { box-shadow: 0 0 6px rgba(255,77,109,0.4), 0 0 14px rgba(255,77,109,0.25); }
+            50% { box-shadow: 0 0 16px rgba(255,77,109,0.8), 0 0 32px rgba(255,77,109,0.6); }
+        }
+
+        @keyframes bounceGlowLoop {
+            0%, 100% { transform: translateY(0); box-shadow: 0 0 8px rgba(255,77,109,0.6), 0 0 18px rgba(255,77,109,0.4); }
+            30% { transform: translateY(-10px); box-shadow: 0 0 18px rgba(255,77,109,0.9), 0 0 40px rgba(255,77,109,0.7); }
+            60% { transform: translateY(0); box-shadow: 0 0 12px rgba(255,77,109,0.7); }
+        }
+
+        @keyframes heroIntro {
+            0% { opacity: 0; transform: scale(1.06); filter: brightness(0.75); }
+            100% { opacity: 1; transform: scale(1); filter: brightness(1); }
+        }
+        .contact-content {
+            display: flex;
+            justify-content: center;
+            align-items: stretch; /* makes divider match height */
+            gap: 60px;
+            position: relative;
+        }
+        
+        /* Vertical divider */
+        .contact-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-pink);
+            box-shadow: var(--text-glow);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .contact-box {
+            max-width: 400px;
+            padding: 30px;
+        }
+        @media (max-width: 768px) {
+          .contact-content {
+            flex-direction: column;
+            align-items: center;     /* ✅ centers the stacked items */
+            justify-content: center;
+            gap: 40px;
+            text-align: center;      /* ✅ ensures text stays centered */
+          }
+        
+          .contact-box {
+            width: 100%;             /* ✅ so it centers nicely within the section */
+            max-width: 420px;        /* keep it from stretching too wide */
+            margin: 0 auto;          /* ✅ extra safety */
+          }
+        
+          .contact-content::before {
+            display: none;           /* ✅ hide divider on mobile */
+          }
+        }
+
     </style>
 </head>
 <body>
@@ -288,31 +510,46 @@
     <header>
         <div class="header-center-wrap">
             <nav class="nav-group">
-                <a href="#home">HOME</a>
+                <a href="index.html">HOME</a>
                 <a href="#about">ABOUT</a>
+                <a href="events.html">SHOWS</a>
             </nav>
             <div class="center-logo-box">
-                <img src="assets/images/logo.png" alt="Rockstar Logo" class="center-logo">
+                <a href="index.html"><img src="assets/images/logo.png" alt="Rockstar Logo" class="center-logo"></a>
             </div>
             <nav class="nav-group">
-                <a href="events.html">SHOWS</a>
                 <a href="#gallery">GALLERY</a>
+                <a href="book-us.html">BOOK US</a>
+                <a href="#" onclick="openContactModal(); return false;">CONTACT</a>
             </nav>
         </div>
-        <div class="header-right-anchor">
-            <a href="mailto:booking@rockstar-band.com" class="btn-book-nav">BOOK US!!!</a>
-        </div>
+        <button class="hamburger" id="hamBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
 
-    <section class="hero" id="home">
-        <div class="carousel-container">
-            <div class="slide active" style="background-image: url('assets/images/header2.jpg');"></div>
-            <div class="slide" style="background-image: url('assets/images/header.jpg');"></div>
-        </div>
-        <div class="hero-overlay"></div>
-        
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html" onclick="toggleMenu()">HOME</a>
+        <a href="#about" onclick="toggleMenu()">ABOUT</a>
+        <a href="events.html" onclick="toggleMenu()">SHOWS</a>
+        <a href="#gallery" onclick="toggleMenu()">GALLERY</a>
+        <a href="book-us.html" onclick="toggleMenu()">BOOKING</a>
+        <a href="#" onclick="toggleMenu(); openContactModal(); return false;">CONTACT</a>
+    </nav>
+
+    <section class="hero-wrap" id="home">
+        <section class="hero">
+            <picture class="hero-media">
+                <source media="(max-width: 768px)" srcset="assets/images/header-mobile.jpg">
+                <img src="assets/images/rockstar_headerfinal-oz.jpg" alt="RockStar hero">
+            </picture>
+            <div class="hero-overlay"></div>
+        </section>
+
         <div class="countdown-wrapper">
-            <div class="countdown-title">Countdown to our next show!</div>
+            <div class="countdown-title">Next show countdown!</div>
             <div class="countdown-timer">
                 <div class="timer-group"><div class="timer-number" id="days">00</div><span class="timer-label">Days</span></div>
                 <div class="timer-group"><div class="timer-number" id="hours">00</div><span class="timer-label">Hours</span></div>
@@ -326,57 +563,167 @@
         <div class="about-content">
             <h2>About Rockstar</h2>
             <p>The Ultimate Arena Rock Experience is an explosive, larger-than-life experience that takes you on a wild ride through the heart of arena rock. Known for their jaw-dropping live performances, Rockstar brings the swagger, style, and sound that will leave you breathless. ROCKSTAR doesn’t just perform the songs; they become the legends, channeling the energy and spirit of rock’s most iconic performers.</p>
-            
             <p>With their wild, outfits and over-the-top stage presence, ROCKSTAR delivers a show that’s as visually stunning as it is sonically unforgettable. From the first note to the last, their sound is a flawless mirror of high -voltage 70s and 80s anthems you know and love, performing each song as it sounds on the album.</p>
-
             <p>The magic happens when the character changes kick in. As they tear through their set, the Lead Singer transforms before your eyes into the personas of rock gods who shaped the genre. From a riff-heavy, leather-clad hero, to a glam rocker, this powerful showman commands the stage with 4 outstanding musicians and vocalists. You’ll see the singer transition into Freddy Mercury, Dee Snyder, Axl Rose, David Lee Roth, Alice Cooper, Brian Johnson, Steve Perry, Ozzy and more! These dramatic shifts bring the music to life, making each performance a dynamic celebration of rock’s greatest icons.</p>
-
             <p>With ROCKSTAR, you’ll enjoy an arena rock spectacle you’ll never forget, blending world-class musicianship with a whole lot of attitude, nostalgia, and fun. So, buckle up and get ready to witness the ultimate Rock ‘n’ Roll journey — where legends are resurrected in real time!</p>
         </div>
     </section>
 
     <div class="section-header" id="gallery">ROCKSTAR GALLERY!</div>
     <div class="media-grid" id="mainGallery">
-        <img src="assets/images/w1.jpg" class="gallery-img" onclick="openModal(0)">
-        <img src="assets/images/w3.jpg" class="gallery-img" onclick="openModal(1)">
-        <img src="assets/images/w5.jpg" class="gallery-img" onclick="openModal(2)">
-        <img src="assets/images/w6.jpg" class="gallery-img" onclick="openModal(3)">
-        <img src="assets/images/w7.jpg" class="gallery-img" onclick="openModal(4)">
-        <img src="assets/images/w9.jpg" class="gallery-img" onclick="openModal(5)">
+        <img src="assets/images/w57.jpg" class="gallery-img" onclick="openModal(0)">
+        <img src="assets/images/w7.jpg" class="gallery-img" onclick="openModal(1)">
+        <img src="assets/images/w15.jpg" class="gallery-img" onclick="openModal(2)">
+        <img src="assets/images/w14.jpg" class="gallery-img" onclick="openModal(3)">
+        <img src="assets/images/w12.jpg" class="gallery-img" onclick="openModal(4)">
+        <img src="assets/images/web22.jpg" class="gallery-img" onclick="openModal(5)">
         <img src="assets/images/w10.jpg" class="gallery-img" onclick="openModal(6)">
-        <img src="assets/images/w11.jpg" class="gallery-img" onclick="openModal(7)">
-        <img src="assets/images/w12.jpg" class="gallery-img" onclick="openModal(8)">
-        
-        <img src="assets/images/w13.jpg" class="gallery-img hidden-item" onclick="openModal(9)">
-        <img src="assets/images/w14.jpg" class="gallery-img hidden-item" onclick="openModal(10)">
-        <img src="assets/images/w15.jpg" class="gallery-img hidden-item" onclick="openModal(11)">
+        <img src="assets/images/w45.jpg" class="gallery-img" onclick="openModal(7)">
+        <img src="assets/images/web4.jpg" class="gallery-img" onclick="openModal(8)">
+        <img src="assets/images/w24.jpg" class="gallery-img hidden-item" onclick="openModal(9)">
+        <img src="assets/images/w17.jpg" class="gallery-img hidden-item" onclick="openModal(10)">
+        <img src="assets/images/w18.jpg" class="gallery-img hidden-item" onclick="openModal(11)">
+        <img src="assets/images/w30.jpg" class="gallery-img hidden-item" onclick="openModal(12)">
+        <img src="assets/images/w31.jpg" class="gallery-img hidden-item" onclick="openModal(13)">
+        <img src="assets/images/w33.jpg" class="gallery-img hidden-item" onclick="openModal(14)">
+        <img src="assets/images/q2.jpg" class="gallery-img hidden-item" onclick="openModal(15)">
+          <img src="assets/images/q3.jpg" class="gallery-img hidden-item" onclick="openModal(16)">
+          <img src="assets/images/q4.jpg" class="gallery-img hidden-item" onclick="openModal(17)">
+          <img src="assets/images/q5.jpg" class="gallery-img hidden-item" onclick="openModal(18)">
+          <img src="assets/images/q6.jpg" class="gallery-img hidden-item" onclick="openModal(19)">
+          <img src="assets/images/q7.jpg" class="gallery-img hidden-item" onclick="openModal(20)">
+          <img src="assets/images/q8.jpg" class="gallery-img hidden-item" onclick="openModal(21)">
+            <img src="assets/images/w11.jpg" class="gallery-img hidden-item" onclick="openModal(22)">
+            <img src="assets/images/q10.jpg" class="gallery-img hidden-item" onclick="openModal(23)">
+            <img src="assets/images/q11.jpg" class="gallery-img hidden-item" onclick="openModal(24)">
+            <img src="assets/images/q12.jpg" class="gallery-img hidden-item" onclick="openModal(25)">
+            <img src="assets/images/q13.jpg" class="gallery-img hidden-item" onclick="openModal(26)">
+            <img src="assets/images/q14.jpg" class="gallery-img hidden-item" onclick="openModal(27)">
+              <img src="assets/images/q15.jpg" class="gallery-img hidden-item" onclick="openModal(28)">
+              <img src="assets/images/q16.jpg" class="gallery-img hidden-item" onclick="openModal(29)">
+              <img src="assets/images/q17.jpg" class="gallery-img hidden-item" onclick="openModal(30)">
+              <img src="assets/images/q18.jpg" class="gallery-img hidden-item" onclick="openModal(31)">
+              <img src="assets/images/q19.jpg" class="gallery-img hidden-item" onclick="openModal(32)">
+              <img src="assets/images/q20.jpg" class="gallery-img hidden-item" onclick="openModal(33)">
+                <img src="assets/images/q21.jpg" class="gallery-img hidden-item" onclick="openModal(34)">
+                <img src="assets/images/w1.jpg" class="gallery-img hidden-item" onclick="openModal(35)">
+                <img src="assets/images/w3.jpg" class="gallery-img hidden-item" onclick="openModal(36)">
+                <img src="assets/images/w4.jpg" class="gallery-img hidden-item" onclick="openModal(37)">
+                <img src="assets/images/w5.jpg" class="gallery-img hidden-item" onclick="openModal(38)">
+                <img src="assets/images/w6.jpg" class="gallery-img hidden-item" onclick="openModal(39)">
+                <img src="assets/images/w11.jpg" class="gallery-img hidden-item" onclick="openModal(40)">
+                <img src="assets/images/w9.jpg" class="gallery-img hidden-item" onclick="openModal(41)">
+                <img src="assets/images/w13.jpg" class="gallery-img hidden-item" onclick="openModal(42)">
+                <img src="assets/images/w16.jpg" class="gallery-img hidden-item" onclick="openModal(43)">
+                <img src="assets/images/w19.jpg" class="gallery-img hidden-item" onclick="openModal(44)">
+                <img src="assets/images/w20.jpg" class="gallery-img hidden-item" onclick="openModal(45)">
+                <img src="assets/images/w21.jpg" class="gallery-img hidden-item" onclick="openModal(46)">
+                <img src="assets/images/w23.jpg" class="gallery-img hidden-item" onclick="openModal(34)">
+                 <img src="assets/images/w25.jpg" class="gallery-img hidden-item" onclick="openModal(35)">
+                 <img src="assets/images/w26.jpg" class="gallery-img hidden-item" onclick="openModal(36)">
+                 <img src="assets/images/w27.jpg" class="gallery-img hidden-item" onclick="openModal(37)">
+                 <img src="assets/images/w28.jpg" class="gallery-img hidden-item" onclick="openModal(38)">
+                 <img src="assets/images/w29.jpg" class="gallery-img hidden-item" onclick="openModal(39)">
+                 <img src="assets/images/w30.jpg" class="gallery-img hidden-item" onclick="openModal(40)">
+                 <img src="assets/images/w31.jpg" class="gallery-img hidden-item" onclick="openModal(41)">
+                 <img src="assets/images/w32.jpg" class="gallery-img hidden-item" onclick="openModal(42)">
+                 <img src="assets/images/w33.jpg" class="gallery-img hidden-item" onclick="openModal(43)">
+                 <img src="assets/images/w34.jpg" class="gallery-img hidden-item" onclick="openModal(44)">
+                 <img src="assets/images/w35.jpg" class="gallery-img hidden-item" onclick="openModal(45)">
+                 <img src="assets/images/w36.jpg" class="gallery-img hidden-item" onclick="openModal(46)">
+                 <img src="assets/images/w37.jpg" class="gallery-img hidden-item" onclick="openModal(47)">
+                   <img src="assets/images/w38.jpg" class="gallery-img hidden-item" onclick="openModal(48)">
+                   <img src="assets/images/w39.jpg" class="gallery-img hidden-item" onclick="openModal(49)">
+                   <img src="assets/images/w40.jpg" class="gallery-img hidden-item" onclick="openModal(50)">
+                   <img src="assets/images/w41.jpg" class="gallery-img hidden-item" onclick="openModal(51)">
+                   <img src="assets/images/w42.jpg" class="gallery-img hidden-item" onclick="openModal(52)">
+                   <img src="assets/images/w43.jpg" class="gallery-img hidden-item" onclick="openModal(53)">
+                   <img src="assets/images/w44.jpg" class="gallery-img hidden-item" onclick="openModal(54)">
+                   <img src="assets/images/w45.jpg" class="gallery-img hidden-item" onclick="openModal(55)">
+                   <img src="assets/images/w46.jpg" class="gallery-img hidden-item" onclick="openModal(56)">
+                   <img src="assets/images/w47.jpg" class="gallery-img hidden-item" onclick="openModal(57)">
+                   <img src="assets/images/w48.jpg" class="gallery-img hidden-item" onclick="openModal(58)">
+                   <img src="assets/images/w49.jpg" class="gallery-img hidden-item" onclick="openModal(59)">
+                    <img src="assets/images/w50.jpg" class="gallery-img hidden-item" onclick="openModal(60)">
+                    <img src="assets/images/w51.jpg" class="gallery-img hidden-item" onclick="openModal(61)">
+                    <img src="assets/images/w52.jpg" class="gallery-img hidden-item" onclick="openModal(62)">
+                    <img src="assets/images/wen8.jpg" class="gallery-img hidden-item" onclick="openModal(63)">
+                    <img src="assets/images/w54.jpg" class="gallery-img hidden-item" onclick="openModal(64)">
+                    <img src="assets/images/w55.jpg" class="gallery-img hidden-item" onclick="openModal(65)">
+                    <img src="assets/images/w56.jpg" class="gallery-img hidden-item" onclick="openModal(66)">
+                    <img src="assets/images/w57.jpg" class="gallery-img hidden-item" onclick="openModal(67)">
+                    <img src="assets/images/w58.jpg" class="gallery-img hidden-item" onclick="openModal(68)">
+                    <img src="assets/images/w59.jpg" class="gallery-img hidden-item" onclick="openModal(69)">
+                    <img src="assets/images/w60.jpg" class="gallery-img hidden-item" onclick="openModal(70)">
+                     <img src="assets/images/w61.jpg" class="gallery-img hidden-item" onclick="openModal(71)">
+                     <img src="assets/images/w62.jpg" class="gallery-img hidden-item" onclick="openModal(72)">
+                     <img src="assets/images/w63.jpg" class="gallery-img hidden-item" onclick="openModal(73)">
+                     <img src="assets/images/w64.jpg" class="gallery-img hidden-item" onclick="openModal(74)">
+                     <img src="assets/images/w65.jpg" class="gallery-img hidden-item" onclick="openModal(75)">
+                     <img src="assets/images/web5.jpg" class="gallery-img hidden-item" onclick="openModal(76)">
+                     <img src="assets/images/web7.jpg" class="gallery-img hidden-item" onclick="openModal(77)">
+                     <img src="assets/images/web9.JPG" class="gallery-img hidden-item" onclick="openModal(78)">
+                     <img src="assets/images/web10.jpg" class="gallery-img hidden-item" onclick="openModal(79)">
+                     <img src="assets/images/web12.jpg" class="gallery-img hidden-item" onclick="openModal(80)">
+                     <img src="assets/images/web13.jpg" class="gallery-img hidden-item" onclick="openModal(81)">
+                     <img src="assets/images/web14.jpg" class="gallery-img hidden-item" onclick="openModal(82)">
+                     <img src="assets/images/web15.jpg" class="gallery-img hidden-item" onclick="openModal(83)">
+                     <img src="assets/images/web17.jpg" class="gallery-img hidden-item" onclick="openModal(84)">
+                     <img src="assets/images/web18.jpg" class="gallery-img hidden-item" onclick="openModal(85)">
+                     <img src="assets/images/web24.jpg" class="gallery-img hidden-item" onclick="openModal(86)">
+                     <img src="assets/images/web26.jpg" class="gallery-img hidden-item" onclick="openModal(87)">
+                     <img src="assets/images/web29.jpg" class="gallery-img hidden-item" onclick="openModal(88)">
+                     <img src="assets/images/web30.jpg" class="gallery-img hidden-item" onclick="openModal(89)">
+                     <img src="assets/images/web31.jpg" class="gallery-img hidden-item" onclick="openModal(90)">
+                     <img src="assets/images/web32.jpg" class="gallery-img hidden-item" onclick="openModal(91)">
+                     <img src="assets/images/web33.jpg" class="gallery-img hidden-item" onclick="openModal(92)">
+                     <img src="assets/images/web35.jpg" class="gallery-img hidden-item" onclick="openModal(93)">
+                     <img src="assets/images/web43.jpg" class="gallery-img hidden-item" onclick="openModal(94)">
+                     <img src="assets/images/web45.jpg" class="gallery-img hidden-item" onclick="openModal(95)">
+                     <img src="assets/images/web47.jpg" class="gallery-img hidden-item" onclick="openModal(96)">
+                     <img src="assets/images/web48.jpg" class="gallery-img hidden-item" onclick="openModal(97)">
+                     <img src="assets/images/web50.jpg" class="gallery-img hidden-item" onclick="openModal(98)">
+                     <img src="assets/images/web52.jpg" class="gallery-img hidden-item" onclick="openModal(99)">
+                     <img src="assets/images/web65.jpg" class="gallery-img hidden-item" onclick="openModal(100)">
+
     </div>
+
     <div class="load-more-container">
         <button class="btn-load-more" id="loadMoreBtn">LOAD MORE PHOTOS <i class="fa-solid fa-chevron-down"></i></button>
     </div>
 
-    <div class="section-header" id="reels">ROCKSTAR REELS!</div>
+   <!-- <div class="section-header" id="reels">ROCKSTAR REELS!</div>
     <div class="media-grid" id="reelsGrid">
         <div class="reel-embed-container">
-            <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2FRockStar80sBand%2Freels%2F10158652362486154%2F&show_text=false&width=267&t=0" 
-                width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2FRockStar80sBand%2Freels%2F10158652362486154%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         </div>
         <div class="reel-embed-container">
-            <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2FRockStar80sBand%2Freels%2F10158652358826154%2F&show_text=false&width=267&t=0" 
-                width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2FRockStar80sBand%2Freels%2F10158652358826154%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         </div>
         <div class="reel-embed-container">
-            <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2FRockStar80sBand%2Freels%2F10158652354546154%2F&show_text=false&width=267&t=0" 
-                width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2FRockStar80sBand%2Freels%2F10158652354546154%2F&show_text=false&width=267&t=0" width="267" height="476" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         </div>
-    </div>
+    </div> -->
 
-    <section class="contact-section" id="contact">
+<section class="contact-section" id="contact">
         <div class="contact-bg"></div>
+    
         <div class="contact-content">
-            <h2>Contact Us</h2>
-            <p>For booking and inquiries, click the button below</p>
-            <a href="mailto:booking@rockstar-band.com" class="footer-book-btn">BOOK US!!!</a>
+            <div class="contact-box">
+                <h2>CONTACT</h2>
+                <p>Have a question? Want to know more about Rockstar?</p>
+                <a href="#" class="footer-book-btn" onclick="openContactModal(); return false;">
+                    CONTACT US
+                </a>
+            </div>
+    
+            <div class="contact-box">
+                <h2>BOOK US!</h2>
+                <p>Ready to book the Ultimate Arena Rock Experience!?</p>
+                <a href="/book-us.html" class="footer-book-btn">
+                    BOOK ROCKSTAR!
+                </a>
+            </div>
         </div>
     </section>
 
@@ -395,14 +742,42 @@
         <button class="modal-btn next-btn" onclick="changeImage(1, event)">&#10095;</button>
     </div>
 
+    <div id="contactModal" class="contact-modal-overlay" onclick="closeContactModal()">
+        <div class="contact-modal" onclick="event.stopPropagation()">
+            <button class="contact-modal-close" onclick="closeContactModal()">&times;</button>
+            <h2>Contact Us</h2>
+            <p>Have a question? Drop us a line and we'll get back to you.</p>
+            <form id="contactForm" onsubmit="submitContactForm(event)">
+                <input type="hidden" name="_subject" value="Homepage Contact Form Submission">
+                <input type="hidden" name="Form Source" value="Homepage Contact">
+                <div class="contact-form-group">
+                    <label for="contactName">Name</label>
+                    <input type="text" id="contactName" name="name" required>
+                </div>
+                <div class="contact-form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail" name="email" required>
+                </div>
+                <div class="contact-form-group">
+                    <label for="contactMessage">Message</label>
+                    <textarea id="contactMessage" name="message" required></textarea>
+                </div>
+                <button type="submit" class="contact-form-submit">SEND MESSAGE</button>
+            </form>
+            <div class="contact-form-status" id="contactFormStatus"></div>
+        </div>
+    </div>
+
     <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }, 5000);
+        const hamBtn = document.getElementById('hamBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        function toggleMenu() {
+            hamBtn.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : 'auto';
+        }
+        hamBtn.addEventListener('click', toggleMenu);
 
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         let isExpanded = false;
@@ -413,11 +788,13 @@
                 this.innerHTML = 'SHOW LESS <i class="fa-solid fa-chevron-up"></i>';
                 isExpanded = true;
             } else {
-                allImages.forEach((img, index) => { if (index > 8) img.classList.add('hidden-item'); });
+                allImages.forEach((img, index) => {
+                    if (index > 8) img.classList.add('hidden-item');
+                });
                 this.innerHTML = 'LOAD MORE PHOTOS <i class="fa-solid fa-chevron-down"></i>';
                 isExpanded = false;
             }
-            updateImageList(); 
+            updateImageList();
         });
 
         const targetDate = new Date("May 2, 2026 20:00:00").getTime();
@@ -434,14 +811,18 @@
 
         let currentIndex = 0;
         let images = [];
-        function updateImageList() { images = Array.from(document.querySelectorAll('.gallery-img')).map(img => img.src); }
+        function updateImageList() {
+            images = Array.from(document.querySelectorAll('.gallery-img')).map(img => img.src);
+        }
         updateImageList();
+
         function openModal(index) {
             currentIndex = index;
             document.getElementById("imageModal").style.display = "flex";
             document.getElementById("modalImg").src = images[currentIndex];
             document.body.style.overflow = "hidden";
         }
+
         function changeImage(direction, event) {
             if(event) event.stopPropagation();
             currentIndex += direction;
@@ -449,9 +830,58 @@
             if (currentIndex < 0) currentIndex = images.length - 1;
             document.getElementById("modalImg").src = images[currentIndex];
         }
+
         function closeModal() {
             document.getElementById("imageModal").style.display = "none";
             document.body.style.overflow = "auto";
+        }
+
+        // --- Contact Form Modal ---
+        function openContactModal() {
+            document.getElementById('contactModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.getElementById('contactFormStatus').textContent = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('contactModal').classList.contains('active')) {
+                closeContactModal();
+            }
+        });
+
+        function submitContactForm(e) {
+            e.preventDefault();
+            var form = document.getElementById('contactForm');
+            var status = document.getElementById('contactFormStatus');
+            var submitBtn = form.querySelector('.contact-form-submit');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'SENDING...';
+
+            fetch('https://formspree.io/f/maqozlkj', {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(function(response) {
+                if (response.ok) {
+                    status.textContent = 'Message sent! We\'ll get back to you soon.';
+                    form.reset();
+                    setTimeout(function() { closeContactModal(); }, 2500);
+                } else {
+                    status.textContent = 'Something went wrong. Please try again.';
+                }
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'SEND MESSAGE';
+            }).catch(function() {
+                status.textContent = 'Connection error. Please try again.';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'SEND MESSAGE';
+            });
         }
     </script>
 </body>

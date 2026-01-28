@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Book ROCKSTAR - The Ultimate Arena Rock Experience</title>
+	<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	
+	<style>
+		:root {
+			--primary-pink: #ff4d6d;
+			--bg-black: #000000;
+			--text-glow: 0 0 10px rgba(255, 77, 109, 0.8), 0 0 20px rgba(255, 77, 109, 0.4);
+			--card-bg: rgba(10, 10, 10, 0.95);
+			--header-h: 130px;
+		}
+
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		html { scroll-behavior: smooth; }
+		body { background-color: var(--bg-black); color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
+
+		/* --- HEADER --- */
+		header {
+			background: rgba(0, 0, 0, 0.95);
+			height: var(--header-h);
+			padding: 0 5%;
+			display: flex;
+			align-items: center;
+			position: sticky;
+			top: 0;
+			z-index: 2000;
+		}
+
+		.header-center-wrap { display: flex; align-items: center; justify-content: center; flex-grow: 1; }
+		.nav-group { display: flex; align-items: center; }
+		.nav-group a {
+			color: white;
+			text-decoration: none;
+			margin: 0 22px;
+			font-family: 'Oswald';
+			font-size: 20px;
+			letter-spacing: 2px;
+			text-shadow: var(--text-glow);
+			transition: 0.3s ease;
+			white-space: nowrap;
+		}
+		.nav-group a:hover { color: var(--primary-pink); text-shadow: 0 0 15px rgba(255, 77, 109, 1); }
+
+		.center-logo-box { display: flex; align-items: center; margin: 0 35px; flex-shrink: 0; }
+		.center-logo { width: auto; height: 115px; transition: transform 0.25s ease, filter 0.25s ease; }
+		.center-logo:hover { transform: scale(1.08); filter: brightness(1.15); }
+
+		.hamburger { display: none; flex-direction: column; justify-content: space-between; width: 30px; height: 21px; cursor: pointer; z-index: 2100; background: none; border: none; padding: 0; position: absolute; right: 5%; }
+		.hamburger span { display: block; width: 100%; height: 3px; background-color: white; transition: all 0.3s ease-in-out; border-radius: 3px; }
+		.hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+		.hamburger.active span:nth-child(2) { opacity: 0; }
+		.hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+		.mobile-nav { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.98); display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.4s ease-in-out; z-index: 1050; }
+		.mobile-nav.active { right: 0; }
+		.mobile-nav a { color: white; text-decoration: none; font-family: 'Oswald'; font-size: 30px; margin: 12px 0; text-shadow: var(--text-glow); }
+
+		/* --- HERO --- */
+		.booking-hero {
+			position: relative;
+			height: 40vh;
+			background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('assets/images/bookingHeader.jpeg') center/cover no-repeat;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			border-bottom: 1px solid rgba(255, 77, 109, 0.1);
+		}
+		.booking-hero h1 { font-family: 'Montserrat'; font-size: 72px; text-transform: uppercase; text-shadow: var(--text-glow); letter-spacing: 8px; }
+
+		/* --- ACCORDION --- */
+		.page-content { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+		.accordion-item { margin-bottom: 60px; background: var(--card-bg); border: 1px solid #1a1a1a; border-left: 5px solid var(--primary-pink); box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; }
+		.accordion-trigger { width: 100%; padding: 30px 40px; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: white; }
+		.accordion-trigger h2 { font-family: 'Oswald'; font-size: 36px; text-transform: uppercase; letter-spacing: 2px; text-shadow: var(--text-glow); }
+		.accordion-trigger i { font-size: 24px; color: var(--primary-pink); transition: transform 0.5s; }
+		.accordion-content-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+		.accordion-item.active .accordion-content-wrapper { grid-template-rows: 1fr; }
+		.accordion-item.active .accordion-trigger i { transform: rotate(180deg); }
+		.accordion-inner { overflow: hidden; }
+		.accordion-body { padding: 10px 40px 50px; opacity: 0; transform: translateY(20px); transition: opacity 0.4s 0.2s, transform 0.4s 0.2s; }
+		.accordion-item.active .accordion-body { opacity: 1; transform: translateY(0); }
+
+		.info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; margin-bottom: 30px; }
+		.info-col h3 { font-family: 'Oswald'; font-size: 24px; color: var(--primary-pink); text-transform: uppercase; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 8px; }
+		.info-col p { font-size: 16px; line-height: 1.8; color: #ddd; margin-bottom: 20px; }
+		.info-col ul { list-style: none; }
+		.info-col li { margin-bottom: 12px; position: relative; padding-left: 20px; font-size: 15px; color: #efefef; line-height: 1.4; }
+		.info-col li::before { content: '•'; position: absolute; left: 0; color: var(--primary-pink); font-weight: bold; }
+		.info-sub-header { font-family: 'Oswald'; font-size: 16px; text-transform: uppercase; margin: 25px 0 15px; color: white; letter-spacing: 1px; }
+
+		/* --- FORM --- */
+		.form-card { background: #0a0a0a; border-left: 5px solid var(--primary-pink); padding: 60px; box-shadow: -15px 0 30px rgba(255, 77, 109, 0.05); }
+		.form-card h2 { font-family: 'Oswald'; font-size: 38px; text-transform: uppercase; text-shadow: var(--text-glow); text-align: center; margin-bottom: 10px; }
+		.form-intro { text-align: center; color: #888; margin-bottom: 50px; font-style: italic; }
+		.section-title { font-family: 'Oswald'; font-size: 22px; color: var(--primary-pink); text-transform: uppercase; margin: 50px 0 25px; border-bottom: 1px solid #222; padding-bottom: 10px; display: block; letter-spacing: 1px; }
+		.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+		.full-width { grid-column: span 2; }
+		.field-group { display: flex; flex-direction: column; }
+		label { font-family: 'Oswald'; text-transform: uppercase; font-size: 13px; margin-bottom: 8px; color: #aaa; letter-spacing: 1px; }
+		label span { color: var(--primary-pink); }
+
+		input, select, textarea {
+			background-color: #000 !important;
+			border: 1px solid #222;
+			color: white !important;
+			padding: 15px;
+			font-family: 'Roboto';
+			font-size: 16px;
+			border-radius: 0;
+			outline: none;
+			-webkit-text-fill-color: white !important;
+		}
+		input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px #000 inset !important; -webkit-text-fill-color: white !important; transition: background-color 5000s ease-in-out 0s; }
+		input:focus, textarea:focus { border-color: var(--primary-pink) !important; background-color: #000 !important; }
+
+		.radio-check-group { display: flex; flex-wrap: wrap; gap: 20px; padding: 15px; background: #050505; border: 1px solid #111; }
+		.check-item { display: flex; align-items: center; font-size: 14px; cursor: pointer; color: #ccc; }
+		.check-item input { margin-right: 10px; accent-color: var(--primary-pink); width: 18px; height: 18px; cursor: pointer; }
+
+		.btn-submit { background: var(--primary-pink); color: white; border: none; width: 100%; padding: 24px; font-family: 'Oswald'; font-size: 24px; font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s; margin-top: 50px; letter-spacing: 2px; }
+		.btn-submit:hover { box-shadow: var(--text-glow); transform: scale(1.01); }
+
+		/* --- FOOTER --- */
+		footer { background: #000; padding: 60px 0; text-align: center; border-top: 1px solid #111; width: 100%; }
+		.social-links { margin-bottom: 25px; display: flex; justify-content: center; gap: 30px; }
+		.social-links a { color: white; font-size: 28px; transition: 0.3s; }
+		.social-links a:hover { color: var(--primary-pink); filter: drop-shadow(0 0 8px var(--primary-pink)); }
+		.copyright { font-size: 12px; color: #444; letter-spacing: 2px; text-transform: uppercase; }
+
+		#thankYouModal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+		.modal-inner { background: #0a0a0a; border: 2px solid var(--primary-pink); padding: 50px; text-align: center; max-width: 500px; width: 90%; box-shadow: var(--text-glow); }
+
+		/* --- CONTACT FORM MODAL --- */
+		.contact-modal-overlay {
+			display: none;
+			position: fixed;
+			z-index: 4000;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.92);
+			justify-content: center;
+			align-items: center;
+		}
+
+		.contact-modal-overlay.active { display: flex; }
+
+		.contact-modal {
+			background: #111;
+			border: 1px solid rgba(255, 77, 109, 0.3);
+			border-radius: 8px;
+			padding: 50px 40px;
+			width: 90%;
+			max-width: 520px;
+			position: relative;
+			box-shadow: 0 0 40px rgba(255, 77, 109, 0.15);
+		}
+
+		.contact-modal-close {
+			position: absolute;
+			top: 15px;
+			right: 20px;
+			color: #fff;
+			font-size: 32px;
+			cursor: pointer;
+			background: none;
+			border: none;
+			line-height: 1;
+			transition: color 0.3s;
+		}
+
+		.contact-modal-close:hover { color: var(--primary-pink); }
+
+		.contact-modal h2 {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 36px;
+			text-transform: uppercase;
+			text-shadow: var(--text-glow);
+			margin-bottom: 8px;
+			text-align: center;
+			color: white;
+		}
+
+		.contact-modal > p {
+			font-family: 'Roboto', sans-serif;
+			font-size: 15px;
+			color: #aaa;
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		.contact-form-group { margin-bottom: 18px; }
+
+		.contact-form-group label {
+			display: block;
+			font-family: 'Oswald', sans-serif;
+			font-size: 14px;
+			letter-spacing: 1.5px;
+			text-transform: uppercase;
+			color: #ccc;
+			margin-bottom: 6px;
+		}
+
+		.contact-form-group input,
+		.contact-form-group textarea {
+			width: 100%;
+			padding: 12px 14px;
+			background: #1a1a1a !important;
+			border: 1px solid #333;
+			border-radius: 4px;
+			color: white !important;
+			font-family: 'Roboto', sans-serif;
+			font-size: 15px;
+			transition: border-color 0.3s;
+			outline: none;
+			-webkit-text-fill-color: white !important;
+		}
+
+		.contact-form-group input:-webkit-autofill,
+		.contact-form-group input:-webkit-autofill:hover,
+		.contact-form-group input:-webkit-autofill:focus,
+		.contact-form-group textarea:-webkit-autofill {
+			-webkit-box-shadow: 0 0 0px 1000px #1a1a1a inset !important;
+			-webkit-text-fill-color: white !important;
+			transition: background-color 5000s ease-in-out 0s;
+		}
+
+		.contact-form-group input:focus,
+		.contact-form-group textarea:focus {
+			border-color: var(--primary-pink);
+			box-shadow: 0 0 8px rgba(255, 77, 109, 0.3);
+		}
+
+		.contact-form-group textarea { height: 120px; resize: vertical; }
+
+		.contact-form-submit {
+			display: block;
+			width: 100%;
+			background: var(--primary-pink);
+			color: white;
+			border: none;
+			padding: 16px;
+			font-family: 'Oswald', sans-serif;
+			font-size: 20px;
+			letter-spacing: 2px;
+			cursor: pointer;
+			margin-top: 10px;
+			transition: box-shadow 0.3s, transform 0.2s;
+		}
+
+		.contact-form-submit:hover {
+			box-shadow: 0 0 18px rgba(255, 77, 109, 0.9), 0 0 40px rgba(255, 77, 109, 0.5);
+			transform: translateY(-2px);
+		}
+
+		.contact-form-status {
+			text-align: center;
+			margin-top: 15px;
+			font-family: 'Roboto', sans-serif;
+			font-size: 14px;
+			color: var(--primary-pink);
+			min-height: 20px;
+		}
+
+		@media (max-width: 1024px) {
+			header { height: 100px; }
+			.nav-group { display: none; }
+			.hamburger { display: flex; }
+			.center-logo { height: 75px; }
+			.form-grid { grid-template-columns: 1fr; }
+			.full-width { grid-column: span 1; }
+			.info-grid { grid-template-columns: 1fr; gap: 30px; }
+			.booking-hero h1 { font-size: 40px; }
+			.btn-submit { padding: 16px; font-size: 18px; }
+		}
+
+		@media (max-width: 480px) {
+			.contact-modal { padding: 35px 20px; width: 95%; }
+			.contact-modal h2 { font-size: 28px; }
+		}
+	</style>
+</head>
+<body>
+
+	<header>
+		<div class="header-center-wrap">
+			<nav class="nav-group"><a href="index.html">HOME</a><a href="index.html#about">ABOUT</a><a href="events.html">SHOWS</a></nav>
+			<div class="center-logo-box"><a href="index.html"><img src="assets/images/logo.png" alt="Rockstar Logo" class="center-logo"></a></div>
+			<nav class="nav-group"><a href="index.html#gallery">GALLERY</a><a href="book-us.html">BOOK US</a><a href="#" onclick="openContactModal(); return false;">CONTACT</a></nav>
+		</div>
+		<button class="hamburger" id="hamBtn"><span></span><span></span><span></span></button>
+	</header>
+
+	<nav class="mobile-nav" id="mobileNav">
+		<a href="index.html" onclick="toggleMenu()">HOME</a><a href="index.html#about" onclick="toggleMenu()">ABOUT</a><a href="index.html#reels" onclick="toggleMenu()">VIDEOS</a><a href="events.html" onclick="toggleMenu()">SHOWS</a><a href="index.html#gallery" onclick="toggleMenu()">GALLERY</a><a href="book-us.html" onclick="toggleMenu()">BOOK US</a><a href="#" onclick="toggleMenu(); openContactModal(); return false;">CONTACT</a>
+	</nav>
+
+	<section class="booking-hero"><h1>BOOK ROCKSTAR!</h1></section>
+
+	<div class="page-content">
+		<div class="accordion-item active" id="accordionItem">
+			<button class="accordion-trigger" onclick="toggleAccordion()">
+				<h2>What You'll Get</h2>
+				<i class="fa-solid fa-chevron-down"></i>
+			</button>
+			<div class="accordion-content-wrapper">
+				<div class="accordion-inner">
+					<div class="accordion-body">
+						<p style="font-size: 18px; line-height: 1.6; color: #fff; margin-bottom: 40px; font-style: italic; border-left: 3px solid var(--primary-pink); padding-left: 20px;">
+							"When you book ROCKSTAR, you're not just hiring a band—you're delivering a full-scale arena rock production designed to captivate audiences, elevate your event, and leave the room buzzing long after the final note."
+						</p>
+						<div class="info-grid">
+							<div class="info-col">
+								<h3>A True Arena Rock Show</h3>
+								<p>ROCKSTAR delivers a high-energy, visually dynamic performance inspired by the biggest tours in rock history. Expect iconic songs, powerful vocals, theatrical transformations, and nonstop crowd engagement—all performed by seasoned professionals who know how to command a stage.</p>
+								<p><strong>This is a concert experience, not background music.</strong></p>
+								
+								<div class="info-sub-header">The Performance</div>
+								<ul>
+									<li>Electrifying renditions of legendary arena rock anthems</li>
+									<li>A charismatic lead singer who transforms into multiple rock icons throughout the show</li>
+									<li>Tight, polished musicianship from a full lineup of elite performers</li>
+									<li>High-impact pacing designed to keep audiences engaged from start to finish</li>
+								</ul>
+								<p>Whether it's a theater, festival stage, or private event, ROCKSTAR scales the intensity to fit the room—without ever losing the spectacle.</p>
+							</div>
+							
+							<div class="info-col">
+								<h3>Production & Technical</h3>
+								<p>ROCKSTAR is production-aware and venue-friendly.</p>
+								<div class="info-sub-header">Provided by the Band</div>
+								<ul>
+									<li>Professional musicians and vocalists</li>
+									<li>Show-ready performance format</li>
+									<li>Clear communication with your production team</li>
+									<li>Advance coordination prior to event day</li>
+								</ul>
+								
+								<div class="info-sub-header">Typically Provided by Venue or Client</div>
+								<ul>
+									<li>Professional PA system appropriate for venue size</li>
+									<li>Stage lighting (basic wash to full concert rig)</li>
+									<li>Stage and power access</li>
+								</ul>
+								<p><em>A detailed technical rider is available upon request.</em></p>
+							</div>
+						</div>
+
+						<div class="info-grid">
+							<div class="info-col">
+								<h3>Flexible Show Formats</h3>
+								<p>ROCKSTAR can tailor the performance to your event needs:</p>
+								<ul>
+									<li>60-minute high-impact set</li>
+									<li>90-minute headline show</li>
+									<li>Two-set performance</li>
+									<li>Custom formats for festivals, casinos, and special events</li>
+								</ul>
+								
+								<div class="info-sub-header">Ideal For</div>
+								<ul>
+									<li>Performing Arts Theaters</li>
+									<li>Music Venues & Casinos</li>
+									<li>Festivals & Outdoor Events</li>
+									<li>Corporate & Private Events</li>
+									<li>Special Ticketed Experiences</li>
+								</ul>
+							</div>
+							
+							<div class="info-col">
+								<h3>Professional. Reliable. Crowd-Proven.</h3>
+								<p>You can expect:</p>
+								<ul>
+									<li>On-time arrival and professional conduct</li>
+									<li>Smooth load-in and soundcheck</li>
+									<li>Respect for venue staff, schedules, and curfews</li>
+									<li>A performance that keeps audiences engaged and promoters happy</li>
+								</ul>
+								
+								<div class="info-sub-header">Let’s Build a Great Show</div>
+								<p>Every event is different. Our team works closely with promoters, venues, and event planners to ensure the performance fits your space, audience, and vision.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-card">
+			<h2>Inquiry Form</h2>
+			<form id="bookingForm" action="https://formspree.io/f/xeeeldnd" method="POST">
+				<span class="section-title">Primary Contact</span>
+				<div class="form-grid">
+					<div class="field-group"><label>Full Name <span>*</span></label><input type="text" name="Full Name" required></div>
+					<div class="field-group"><label>Organization / Venue / Promoter</label><input type="text" name="Organization"></div>
+					<div class="field-group"><label>Email Address <span>*</span></label><input type="email" name="Email" required></div>
+					<div class="field-group"><label>Phone Number <span>*</span></label><input type="tel" name="Phone" required></div>
+				</div>
+
+				<span class="section-title">Event Details</span>
+				<div class="field-group full-width" style="margin-bottom:30px;">
+					<label>Event Type <span>*</span></label>
+					<div class="radio-check-group">
+						<label class="check-item"><input type="checkbox" name="Type_Theater" value="Theater"> Theater</label>
+						<label class="check-item"><input type="checkbox" name="Type_Venue" value="Music Venue"> Music Venue</label>
+						<label class="check-item"><input type="checkbox" name="Type_Festival" value="Festival"> Festival</label>
+						<label class="check-item"><input type="checkbox" name="Type_Private" value="Private Party"> Private Party</label>
+						<label class="check-item"><input type="checkbox" name="Type_Corporate" value="Corporate"> Corporate Event</label>
+						<label class="check-item"><input type="checkbox" name="Type_Casino" value="Casino"> Casino</label>
+						<label class="check-item"><input type="checkbox" name="Type_Other" value="Other"> Other</label>
+					</div>
+				</div>
+
+				<div class="form-grid">
+					<div class="field-group"><label>Event Date(s) <span>*</span></label><input type="text" name="Event Date" required></div>
+					<div class="field-group"><label>Event City & State <span>*</span></label><input type="text" name="Location" required></div>
+					<div class="field-group"><label>Venue Name (if applicable)</label><input type="text" name="Venue Name"></div>
+					<div class="field-group">
+						<label>Indoor or Outdoor Event?</label>
+						<div class="radio-check-group">
+							<label class="check-item"><input type="radio" name="IndoorOutdoor" value="Indoor"> Indoor</label>
+							<label class="check-item"><input type="radio" name="IndoorOutdoor" value="Outdoor"> Outdoor</label>
+						</div>
+					</div>
+				</div>
+
+				<span class="section-title">Performance Details</span>
+				<div class="field-group full-width" style="margin-bottom:20px;">
+					<label>Performance Format Requested</label>
+					<div class="radio-check-group">
+						<label class="check-item"><input type="checkbox" name="format_60" value="60-min"> 60-Minute Arena Rock Set</label>
+						<label class="check-item"><input type="checkbox" name="format_90" value="90-min"> 90-Minute Headline Show</label>
+						<label class="check-item"><input type="checkbox" name="format_twoset" value="Two-Set"> Two-Set Performance</label>
+						<label class="check-item"><input type="checkbox" name="format_custom" value="Custom"> Custom Experience</label>
+					</div>
+				</div>
+
+				<div class="form-grid">
+					<div class="field-group"><label>Estimated Attendance</label><input type="text" name="Estimated Attendance"></div>
+					<div class="field-group">
+						<label>Age of Audience</label>
+						<div class="radio-check-group">
+							<label class="check-item"><input type="radio" name="AgeGroup" value="All Ages"> All Ages</label>
+							<label class="check-item"><input type="radio" name="AgeGroup" value="18+"> 18+</label>
+							<label class="check-item"><input type="radio" name="AgeGroup" value="21+"> 21+</label>
+						</div>
+					</div>
+				</div>
+
+				<span class="section-title">Production & Technical</span>
+				<div class="form-grid">
+					<div class="field-group">
+						<label>Sound System Provided by Venue?</label>
+						<div class="radio-check-group">
+							<label class="check-item"><input type="radio" name="SoundProvided" value="Yes"> Yes</label>
+							<label class="check-item"><input type="radio" name="SoundProvided" value="No"> No</label>
+							<label class="check-item"><input type="radio" name="SoundProvided" value="Unsure"> Unsure</label>
+						</div>
+					</div>
+					<div class="field-group">
+						<label>Lighting System Provided?</label>
+						<div class="radio-check-group">
+							<label class="check-item"><input type="radio" name="LightingProvided" value="Yes"> Yes</label>
+							<label class="check-item"><input type="radio" name="LightingProvided" value="No"> No</label>
+							<label class="check-item"><input type="radio" name="LightingProvided" value="Unsure"> Unsure</label>
+						</div>
+					</div>
+					<div class="field-group"><label>Stage Size (if known)</label><input type="text" name="Stage Size"></div>
+					<div class="field-group"><label>Curfew or Set Time Restrictions?</label><input type="text" name="Curfew Restrictions"></div>
+				</div>
+
+				<span class="section-title">Budget & Booking Info</span>
+				<p style="color: #888; font-size: 13px; font-style: italic; margin-top: -15px; margin-bottom: 20px;">(Providing a budget helps us tailor the show appropriately)</p>
+				<div class="form-grid">
+					<div class="field-group"><label>Estimated Entertainment Budget</label><input type="text" name="Budget"></div>
+					<div class="field-group">
+						<label>Is this a ticketed event?</label>
+						<div class="radio-check-group">
+							<label class="check-item"><input type="radio" name="Ticketed" value="Yes"> Yes</label>
+							<label class="check-item"><input type="radio" name="Ticketed" value="No"> No</label>
+						</div>
+					</div>
+					<div class="field-group">
+						<label>Deposit Required to Secure Date?</label>
+						<div class="radio-check-group">
+							<label class="check-item"><input type="radio" name="DepositAware" value="Yes"> Yes</label>
+							<label class="check-item"><input type="radio" name="DepositAware" value="No"> No</label>
+							<label class="check-item"><input type="radio" name="DepositAware" value="Unsure"> Unsure</label>
+						</div>
+					</div>
+				</div>
+
+				<span class="section-title">Tell Us About Your Event</span>
+				<p style="color: #888; font-size: 13px; margin-bottom: 10px;">Special themes or requests, production expectations, opening acts or shared bill, anything else we should know.</p>
+				<div class="field-group full-width"><textarea name="Additional Details" rows="5" placeholder="Enter details here..."></textarea></div>
+
+				<span class="section-title">How Did You Hear About ROCKSTAR?</span>
+				<div class="radio-check-group" style="margin-bottom:30px;">
+					<label class="check-item"><input type="checkbox" name="Source_Website" value="Website"> Website</label>
+					<label class="check-item"><input type="checkbox" name="Source_Social" value="Social Media"> Social Media</label>
+					<label class="check-item"><input type="checkbox" name="Source_Referral" value="Referral"> Referral</label>
+					<label class="check-item"><input type="checkbox" name="Source_Venue" value="Venue/Promoter"> Venue / Promoter</label>
+					<label class="check-item"><input type="checkbox" name="Source_Other" value="Other"> Other</label>
+				</div>
+
+				<button type="submit" class="btn-submit" id="submitBtn">Submit Booking Request</button>
+			</form>
+		</div>
+	</div>
+
+	<div id="thankYouModal">
+		<div class="modal-inner">
+			<h2>Thank You!</h2>
+			<p>Your request has been sent successfully. Our booking team will respond within 24-48 hours.</p>
+			<button class="btn-submit" onclick="closeModal()" style="margin-top: 20px; padding: 15px; font-size: 16px;">Back to Home</button>
+		</div>
+	</div>
+
+	<div id="contactModal" class="contact-modal-overlay" onclick="closeContactModal()">
+		<div class="contact-modal" onclick="event.stopPropagation()">
+			<button class="contact-modal-close" onclick="closeContactModal()">&times;</button>
+			<h2>Contact Us</h2>
+			<p>Have a question? Drop us a line and we'll get back to you.</p>
+			<form id="contactForm" onsubmit="submitContactForm(event)">
+				<input type="hidden" name="_subject" value="Book Us Page Contact Form Submission">
+				<input type="hidden" name="Form Source" value="Book Us Page Contact">
+				<div class="contact-form-group">
+					<label for="contactName">Name</label>
+					<input type="text" id="contactName" name="name" required>
+				</div>
+				<div class="contact-form-group">
+					<label for="contactEmail">Email</label>
+					<input type="email" id="contactEmail" name="email" required>
+				</div>
+				<div class="contact-form-group">
+					<label for="contactMessage">Message</label>
+					<textarea id="contactMessage" name="message" required></textarea>
+				</div>
+				<button type="submit" class="contact-form-submit">SEND MESSAGE</button>
+			</form>
+			<div class="contact-form-status" id="contactFormStatus"></div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="social-links">
+			<a href="https://www.facebook.com/RockStar80sBand" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+			<a href="https://www.youtube.com/c/RockStarTributeBand/videos" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+		</div>
+		<div class="copyright">© 2026 ROCKSTAR BAND. ALL RIGHTS RESERVED.</div>
+	</footer>
+
+	<script>
+		function toggleMenu() {
+			document.getElementById('hamBtn').classList.toggle('active');
+			document.getElementById('mobileNav').classList.toggle('active');
+		}
+		document.getElementById('hamBtn').addEventListener('click', toggleMenu);
+		function toggleAccordion() {
+			document.getElementById('accordionItem').classList.toggle('active');
+		}
+
+		const form = document.getElementById("bookingForm");
+		const modal = document.getElementById("thankYouModal");
+		const submitBtn = document.getElementById("submitBtn");
+
+		form.addEventListener("submit", function(e) {
+			e.preventDefault();
+			submitBtn.disabled = true;
+			submitBtn.innerText = "Sending...";
+
+			fetch(form.action, {
+				method: 'POST',
+				body: new FormData(form),
+				headers: { 'Accept': 'application/json' }
+			}).then(response => {
+				if (response.ok) {
+					modal.style.display = "flex";
+					form.reset();
+				} else {
+					alert("There was a problem submitting your form.");
+				}
+				submitBtn.disabled = false;
+				submitBtn.innerText = "Submit Booking Request";
+			}).catch(error => {
+				alert("Error connecting to server.");
+				submitBtn.disabled = false;
+				submitBtn.innerText = "Submit Booking Request";
+			});
+		});
+
+		function closeModal() { window.location.href = "index.html"; }
+
+		// --- Contact Form Modal ---
+		function openContactModal() {
+			document.getElementById('contactModal').classList.add('active');
+			document.body.style.overflow = 'hidden';
+		}
+
+		function closeContactModal() {
+			document.getElementById('contactModal').classList.remove('active');
+			document.body.style.overflow = 'auto';
+			document.getElementById('contactFormStatus').textContent = '';
+		}
+
+		document.addEventListener('keydown', function(e) {
+			if (e.key === 'Escape' && document.getElementById('contactModal').classList.contains('active')) {
+				closeContactModal();
+			}
+		});
+
+		function submitContactForm(e) {
+			e.preventDefault();
+			var contactForm = document.getElementById('contactForm');
+			var status = document.getElementById('contactFormStatus');
+			var contactSubmitBtn = contactForm.querySelector('.contact-form-submit');
+
+			contactSubmitBtn.disabled = true;
+			contactSubmitBtn.textContent = 'SENDING...';
+
+			fetch('https://formspree.io/f/maqozlkj', {
+				method: 'POST',
+				body: new FormData(contactForm),
+				headers: { 'Accept': 'application/json' }
+			}).then(function(response) {
+				if (response.ok) {
+					status.textContent = 'Message sent! We\'ll get back to you soon.';
+					contactForm.reset();
+					setTimeout(function() { closeContactModal(); }, 2500);
+				} else {
+					status.textContent = 'Something went wrong. Please try again.';
+				}
+				contactSubmitBtn.disabled = false;
+				contactSubmitBtn.textContent = 'SEND MESSAGE';
+			}).catch(function() {
+				status.textContent = 'Connection error. Please try again.';
+				contactSubmitBtn.disabled = false;
+				contactSubmitBtn.textContent = 'SEND MESSAGE';
+			});
+		}
+	</script>
+</body>
+</html>
